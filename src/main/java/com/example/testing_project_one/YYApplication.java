@@ -27,7 +27,7 @@ public class YYApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Group group = new Group();
-
+        Parent content = FXMLLoader.load(getClass().getClassLoader().getResource("my.fxml"));
         Scene scene = new Scene(group, 750, 500);
         // Подключаем bootstrap
         scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
@@ -54,15 +54,15 @@ public class YYApplication extends Application {
         menuBar.getMenus().add(menu_one);
         VBox vBox = new VBox();
         vBox.getChildren().add(menuBar);
-        borderPane.setTop(vBox);
+        //borderPane.setTop(vBox);
 
 
         Button button = new Button("Нажми");
         button.getStyleClass().add("btn");
-        button.setStyle("-fx-end-margin: 20px");
-        borderPane.setBottom(button);
+        button.setStyle("");
+        //borderPane.setBottom(button);
 
-        group.getChildren().add(borderPane);
+        group.getChildren().add(content);
         stage.setTitle("УУ Учёт, Управление");
         stage.show();
     }
