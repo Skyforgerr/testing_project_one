@@ -36,7 +36,7 @@ public class YYController {
         Stage stage = new Stage();
         stage.setMinHeight(400);
         stage.setMinWidth(600);
-        Parent content = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("new_good.fxml")));
+        Parent content = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("scenes/new_good.fxml")));
         Scene scene = new Scene(anchorPane);
         anchorPane.getChildren().add(content);
         stage.setTitle("Добавление товара");

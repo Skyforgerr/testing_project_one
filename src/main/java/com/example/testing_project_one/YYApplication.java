@@ -17,7 +17,7 @@ public class YYApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent content = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("YY.fxml")));
+        Parent content = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("scenes/YY.fxml")));
         // Устанавливаем минимальный размер окна
         stage.setMinHeight(550);
         stage.setMinWidth(700);
