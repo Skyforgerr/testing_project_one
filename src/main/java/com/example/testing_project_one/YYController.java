@@ -19,8 +19,11 @@ import java.util.Objects;
  */
 public class YYController {
     Stage stage_change = new Stage();
+    @FXML Button good;
     @FXML Button sale;
     @FXML Button up;
+    @FXML Button down;
+    @FXML Button del;
 
     public void settings(){
         Stage stage = new Stage();
@@ -84,11 +87,35 @@ public class YYController {
     public void up_window() throws IOException {
         Stage stage = (Stage) up.getScene().getWindow();
         stage.close();
+        stage_change.setMinHeight(400);
+        stage_change.setMinWidth(297);
         Parent sale_content = FXMLLoader.load(
                 Objects.requireNonNull(getClass().getClassLoader().getResource("up.fxml")));
         Scene sale_scene = new Scene(sale_content);
         stage_change.setScene(sale_scene);
         stage_change.setTitle("Увеличение бюджета");
+        stage_change.show();
+    }
+
+    public void down_window() throws IOException {
+        Stage stage = (Stage) down.getScene().getWindow();
+        stage.close();
+        Parent sale_content = FXMLLoader.load(
+                Objects.requireNonNull(getClass().getClassLoader().getResource("down.fxml")));
+        Scene sale_scene = new Scene(sale_content);
+        stage_change.setScene(sale_scene);
+        stage_change.setTitle("Уменьшение бюджета");
+        stage_change.show();
+    }
+
+    public void del_window() throws IOException {
+        Stage stage = (Stage) del.getScene().getWindow();
+        stage.close();
+        Parent sale_content = FXMLLoader.load(
+                Objects.requireNonNull(getClass().getClassLoader().getResource("del.fxml")));
+        Scene sale_scene = new Scene(sale_content);
+        stage_change.setScene(sale_scene);
+        stage_change.setTitle("Удаление товара");
         stage_change.show();
     }
 

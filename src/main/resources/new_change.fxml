@@ -9,12 +9,15 @@
             prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
             stylesheets="bootstrapfx.css" style="-fx-background-image: url(chance.jpg); -fx-background-size: cover" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
             AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">
-   <Button layoutX="9.0" layoutY="147.0" mnemonicParsing="false" text="Увиличить колическво товара"
-           styleClass="btn"/>
+   <Button layoutX="9.0" layoutY="147.0" mnemonicParsing="false" text="Увиличить количество товара"
+           styleClass="btn" fx:id="good"/>
    <Button layoutX="235.0" layoutY="186.0" mnemonicParsing="false" text="Продать товар" styleClass="btn" fx:id="sale"
            onAction="#sale_window"/>
-   <Button layoutX="40.0" layoutY="228.0" mnemonicParsing="false" text="Увеличить бюджет" styleClass="btn" fx:id="up"/>
-   <Button layoutX="400" layoutY="228.0" mnemonicParsing="false" text="Уменьшить бюджет" styleClass="btn" fx:id="down"/>
+   <Button layoutX="40.0" layoutY="228.0" mnemonicParsing="false" text="Увеличить бюджет" styleClass="btn" fx:id="up"
+           onAction="#up_window"/>
+   <Button layoutX="400" layoutY="228.0" mnemonicParsing="false" text="Уменьшить бюджет" styleClass="btn" fx:id="down"
+           onAction="#down_window"/>
    <Button layoutX="363.0" layoutY="147.0" mnemonicParsing="false" text="Удалить товар из базы данных"
-           styleClass="btn" fx:id="del"/>
+           styleClass="btn" fx:id="del"
+           onAction="#del_window"/>
 </AnchorPane>
