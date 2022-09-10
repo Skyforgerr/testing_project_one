@@ -23,7 +23,7 @@ public class YYApplication extends Application {
         Parent content = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("YY.fxml")));
         // Устанавливаем минимальный размер окна
         stage.setMinHeight(550);
-        stage.setMinWidth(700);
+        stage.setMinWidth(600);
         AnchorPane anchorPane = new AnchorPane();
         Scene scene = new Scene(anchorPane);
         anchorPane.getChildren().add(content);

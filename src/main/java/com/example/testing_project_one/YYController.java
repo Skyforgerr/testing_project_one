@@ -44,4 +44,16 @@ public class YYController {
         stage.show();
 
     }
+
+    public void new_change() throws Exception{
+        Stage stage = new Stage();
+        stage.setMinHeight(400);
+        stage.setMinWidth(600);
+        Parent content = FXMLLoader.load(
+                Objects.requireNonNull(getClass().getClassLoader().getResource("new_change.fxml")));
+        Scene scene = new Scene(content);
+        stage.setTitle("Выбор добавляемого изменения");
+        stage.setScene(scene);
+        stage.show();
+    }
 }
