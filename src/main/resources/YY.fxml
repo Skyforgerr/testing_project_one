@@ -11,18 +11,20 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
 
-<?import javafx.geometry.Insets?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" stylesheets="bootstrapfx.css" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" style="-fx-border-color: grey; -fx-background-color: orange" >
+<AnchorPane fx:controller="com.example.testing_project_one.YYController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="bootstrapfx.css" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+            AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+            style="-fx-border-color: grey; -fx-background-color: orange" >
           <children>
               <MenuBar AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
                   <menus>
                       <Menu mnemonicParsing="false" text="Главное">
                           <items>
-                              <MenuItem mnemonicParsing="false" text="Настройки"/>
+                              <MenuItem mnemonicParsing="false" text="Настройки" onAction="#settings"/>
                           </items>
                       </Menu>
                   </menus>
@@ -69,7 +71,9 @@
                       </TableView>
                   </children>
               </GridPane>
-              <Button mnemonicParsing="false" text="Добавить товар" AnchorPane.leftAnchor="10"  AnchorPane.bottomAnchor="10" styleClass="btn"/>
-              <Button mnemonicParsing="false" text="Скорректировать бюджет" AnchorPane.rightAnchor="10"  AnchorPane.bottomAnchor="10" styleClass="btn"/>
+              <Button mnemonicParsing="false" text="Добавить товар" AnchorPane.leftAnchor="10"
+                      AnchorPane.bottomAnchor="10" styleClass="btn" onAction="#new_good"/>
+              <Button mnemonicParsing="false" text="Добавить изменение" AnchorPane.rightAnchor="10"
+                      AnchorPane.bottomAnchor="10" styleClass="btn" onAction="#new_change"/>
           </children>
 </AnchorPane>
