@@ -14,12 +14,13 @@
 <?import javafx.scene.text.Text?>
 
 
+<?import javafx.scene.control.Label?>
 <AnchorPane fx:controller="com.example.testing_project_one.YYController" maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity"
             xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
             stylesheets="bootstrapfx.css" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
             AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-            style="-fx-border-color: grey; -fx-background-color: orange">
+            style="-fx-border-color: grey; -fx-background-image: url(main_back.jpg)">
     <MenuBar AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
         <Menu mnemonicParsing="false" text="Главное">
             <MenuItem mnemonicParsing="false" text="Настройки" onAction="#settings"/>
@@ -28,8 +29,8 @@
     <BorderPane prefHeight="20.0" prefWidth="600.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
                 AnchorPane.topAnchor="30">
         <center>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Бюджет: " BorderPane.alignment="CENTER"
-                  styleClass="btn"/>
+            <Label text="Бюджет: " BorderPane.alignment="CENTER" styleClass="lbl,lbl-warning"
+                   style="-fx-font-size: 12px"/>
         </center>
     </BorderPane>
     <GridPane prefHeight="329.0" prefWidth="600.0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="0"
@@ -43,8 +44,8 @@
             <RowConstraints/>
             <RowConstraints/>
             <RowConstraints minHeight="10.0" prefHeight="201.5999755859375" vgrow="SOMETIMES"/>
-            <RowConstraints maxHeight="18.4000244140625" minHeight="18.4000244140625"
-                            prefHeight="18.4000244140625" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="24.4000244140625" minHeight="18.4000244140625"
+                            prefHeight="24.4000244140625" vgrow="SOMETIMES"/>
             <RowConstraints minHeight="10.0" prefHeight="103.9999786376953" vgrow="SOMETIMES"/>
         </rowConstraints>
         <TableView prefHeight="227.0" prefWidth="600.0" minHeight="227.0" GridPane.columnIndex="1"
@@ -60,8 +61,8 @@
         </TableView>
         <BorderPane prefHeight="24.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
             <center>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Последние изменения"
-                      BorderPane.alignment="CENTER" styleClass="btn"/>
+                <Label text="Последние изменения" BorderPane.alignment="CENTER" styleClass="lbl,lbl-warning"
+                style="-fx-font-size: 12px"/>
             </center>
         </BorderPane>
         <TableView prefHeight="110.0" prefWidth="600.0" minHeight="110.0" GridPane.columnIndex="1"

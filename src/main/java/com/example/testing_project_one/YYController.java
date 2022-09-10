@@ -1,7 +1,5 @@
 package com.example.testing_project_one;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -65,6 +63,20 @@ public class YYController {
                     Objects.requireNonNull(getClass().getClassLoader().getResource("new_change.fxml")));
                 Scene change = new Scene(main_content);
         stage_change.setScene(change);
+        stage_change.setTitle("Выбор изменения");
+        stage_change.show();
+    }
+
+    public void good_window() throws IOException {
+        Stage stage = (Stage) good.getScene().getWindow();
+        stage.close();
+        stage_change.setMinHeight(400);
+        stage_change.setMinWidth(650);
+        Parent sale_content = FXMLLoader.load(
+                Objects.requireNonNull(getClass().getClassLoader().getResource("good.fxml")));
+        Scene sale_scene = new Scene(sale_content);
+        stage_change.setScene(sale_scene);
+        stage_change.setTitle("Изменение количества товара");
         stage_change.show();
     }
 

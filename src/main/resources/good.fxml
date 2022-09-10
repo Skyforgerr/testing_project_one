@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(sale.jpg); -fx-background-size: cover" stylesheets="bootstrapfx.css" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.testing_project_one.YYController">
+    <TableView layoutX="15.0" layoutY="30.0" prefHeight="200.0" prefWidth="300.0" AnchorPane.bottomAnchor="70" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="300" AnchorPane.topAnchor="30">
+      <columns>
+          <TableColumn maxWidth="100" style="-fx-font-size: 10px" styleClass="lbl, lbl-warning" text="ID Товара" />
+          <TableColumn minWidth="225" style="-fx-font-size: 10px" styleClass="lbl, lbl-warning" text="Название товара" />
+      </columns>
+    </TableView>
+    <Button layoutX="523.0" layoutY="360.0" mnemonicParsing="false" styleClass="btn" text="Изменить" AnchorPane.bottomAnchor="10" AnchorPane.rightAnchor="10" />
+    <TextField layoutX="347.0" layoutY="71.0" style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa" AnchorPane.rightAnchor="100" />
+    <Label layoutX="347.0" layoutY="46.0" style="-fx-font-size: 15px" styleClass="lbl, lbl-warning" text="ID Товара" AnchorPane.rightAnchor="100" />
+    <Label layoutX="347.0" layoutY="121.0" style="-fx-font-size: 15px" styleClass="lbl, lbl-warning" text="Количество" AnchorPane.rightAnchor="100" />
+    <TextField layoutX="348.0" layoutY="146.0" style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa" AnchorPane.rightAnchor="100" />
+   <Label text="Чтобы уменьшить количество товара укажите число с &quot;-&quot;" AnchorPane.leftAnchor="10"
+          AnchorPane.bottomAnchor="10" style="-fx-font-size: 15px" styleClass="lbl, lbl-warning"/>
+</AnchorPane>
