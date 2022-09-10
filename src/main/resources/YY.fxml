@@ -29,9 +29,10 @@
                       </Menu>
                   </menus>
               </MenuBar>
-              <BorderPane prefHeight="28.0" prefWidth="600.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="30">
+              <BorderPane prefHeight="20.0" prefWidth="600.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="30">
                   <center>
-                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Бюджет: " BorderPane.alignment="CENTER" />
+                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Бюджет: " BorderPane.alignment="CENTER"
+                            styleClass="btn"/>
                   </center>
               </BorderPane>
               <GridPane prefHeight="329.0" prefWidth="600.0" AnchorPane.rightAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="50">
@@ -60,7 +61,8 @@
                       </TableView>
                       <BorderPane prefHeight="24.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                           <center>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Последние изменения" BorderPane.alignment="CENTER" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Последние изменения"
+                                    BorderPane.alignment="CENTER" styleClass="btn"/>
                           </center>
                       </BorderPane>
                       <TableView prefHeight="110.0" prefWidth="600.0" minHeight="110.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
