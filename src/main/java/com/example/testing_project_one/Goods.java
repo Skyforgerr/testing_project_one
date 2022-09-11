@@ -15,7 +15,7 @@ public class Goods {
         this.amount = amount;
         this.cost_in = cost_in;
         this.cost_out = cost_out;
-        //this.profit = profit;
+        this.profit = cost_in - cost_out;
     }
 
     public int getProfit() {
