@@ -10,11 +10,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.*;
 import java.util.Objects;
 
 /**
@@ -22,13 +26,113 @@ import java.util.Objects;
  */
 public class YYController {
     Stage stage_change = new Stage();
-    @FXML Button good;
-    @FXML Button sale;
-    @FXML Button up;
-    @FXML Button down;
-    @FXML Button del;
+    @FXML
+    Button good;
+    @FXML
+    Button sale;
+    @FXML
+    Button up;
+    @FXML
+    Button down;
+    @FXML
+    Button del;
+    @FXML
+    TextField name;
+    @FXML
+    TextField amount;
+    @FXML
+    TextField cost_out;
+    @FXML
+    TextField cost_in;
+    Connection connection;
 
-    public void settings(){
+
+
+    //doing some shit
+    public void startDataBase() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+            System.out.println("Connection established...");
+            createDataBase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void createDataBase() throws SQLException {
+        Statement statement = connection.createStatement();
+        String tableA = "CREATE TABLE IF NOT EXISTS GOODS" +
+                "(id_goods int AUTOI_NCREMENT, " +
+                "name text, " +
+                "amount int, " +
+                "cost_out int, " +
+                "cost_in int, " +
+                "profit int, " +
+                "PRIMARY KEY (id_goods));";
+        statement.executeUpdate(tableA);
+        String sql1 = "CREATE TABLE IF NOT EXISTS CHANGES" +
+                "(id_changes int AUTO_INCREMENT, " +
+                "id_goods int, " +
+                "comment text, " +
+                "PRIMARY KEY (id_changes), " +
+                "FOREIGN KEY (id_goods) REFERENCES goods (id_goods));";
+        statement.executeUpdate(sql1);
+        String sql2 = "CREATE TABLE IF NOT EXISTS MONEY" +
+                "(all_the_money int, " +
+                "all_the_lost int);";
+        statement.executeUpdate(sql2);
+    }
+    public void insertGoods() throws SQLException {
+        connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        Statement statement;
+        try {
+            statement = connection.createStatement();
+        } catch (Exception e) {
+            throw new RuntimeException("unhandled", e);
+        }
+        Goods goods = null;
+        try {
+            goods = new Goods(name.getText(), Integer.parseInt(amount.getText()), Integer.parseInt(cost_out.getText()), Integer.parseInt(cost_in.getText()), (Integer.parseInt(cost_in.getText()) - Integer.parseInt(cost_out.getText())));
+            System.out.println("Adding goods to the table");
+            String addingGoods = "INSERT INTO GOODS (name, amount, cost_out, cost_in, profit)" +
+                    "VALUES ('" + goods.getName() + "', '" + goods.getAmount() + "', '" + goods.getCost_out() +
+                    "', '" + goods.getCost_in() + "', '" + Math.abs(goods.getCost_out() - goods.getCost_in()) + "');";
+            statement.executeUpdate(addingGoods);
+        } catch (NumberFormatException e) {
+            Stage stage = new Stage();
+            stage.setMinHeight(100);
+            stage.setMinWidth(400);
+            stage.setTitle("Ошибка");
+            BorderPane borderPane = new BorderPane();
+            Text text = new Text("Некорректные данные!!!");
+            text.setStyle("--fxbackground-color: red");
+            borderPane.setCenter(text);
+            Scene scene = new Scene(borderPane);
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
+    public void closeDataBase(){
+        try{
+            connection.close();
+            System.out.println("Connection ended...");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    //doing some shit
+
+
+
+
+
+
+
+    public void settings() {
         Stage stage = new Stage();
         Group group = new Group();
         Scene scene = new Scene(group);
@@ -45,7 +149,7 @@ public class YYController {
         stage.show();
     }
 
-    public void new_good() throws Exception{
+    public void new_good() throws Exception {
         AnchorPane anchorPane = new AnchorPane();
         Stage stage = new Stage();
         stage.setMinHeight(400);
@@ -59,14 +163,14 @@ public class YYController {
 
     }
 
-    public void new_change() throws Exception{
+    public void new_change() throws Exception {
         stage_change.setMinHeight(400);
         stage_change.setMinWidth(620);
         stage_change.setMaxHeight(400);
         stage_change.setMaxWidth(620);
-                Parent main_content = FXMLLoader.load(
-                    Objects.requireNonNull(getClass().getClassLoader().getResource("new_change.fxml")));
-                Scene change = new Scene(main_content);
+        Parent main_content = FXMLLoader.load(
+                Objects.requireNonNull(getClass().getClassLoader().getResource("new_change.fxml")));
+        Scene change = new Scene(main_content);
         stage_change.setScene(change);
         stage_change.setTitle("Выбор изменения");
         stage_change.show();
@@ -135,6 +239,7 @@ public class YYController {
         stage_change.setTitle("Удаление товара");
         stage_change.show();
     }
+
     // работа с выводом в верхнюю таблицу
     private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
 
@@ -161,21 +266,35 @@ public class YYController {
 
 
     @FXML
-    private void initialize(){
+    private void initialize() throws SQLException {
         initData();
 
         idColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
         amountColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("amount"));
-        costOutColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("costOut"));
-        costInColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("costIn"));
+        costOutColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("cost_out"));
+        costInColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("cost_in"));
         profitColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("profit"));
 
         tableGoods.setItems(goodsData);
     }
 
-    private void initData(){
-        goodsData.add(new Goods("name1", 2, 4, 3, 3));
-    }
+    private void initData() throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
 
+        String sql = "SELECT id_goods, name, amount, cost_out, cost_in, profit FROM GOODS";
+        Statement statement = connection.createStatement();
+        ResultSet rs;
+        rs = statement.executeQuery(sql);
+
+        while (rs.next()) {
+            int id_goods = rs.getInt(1);
+            String name = rs.getString(2);
+            int amount = rs.getInt(3);
+            int cost_out = rs.getInt(4);
+            int cost_in = rs.getInt(5);
+            int profit = rs.getInt(6);
+            goodsData.add(new Goods(name, amount, cost_out, cost_in, profit));
+        }
+    }
 }

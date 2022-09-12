@@ -17,11 +17,10 @@ import java.util.Objects;
  * @author Pavel
  */
 public class YYApplication extends Application {
-
     @Override
     public void start(Stage stage) throws Exception {
-        DataBase dataBase = new DataBase();
-        dataBase.startDataBase();
+        YYController yyController = new YYController();
+        yyController.startDataBase();
         Parent content = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("YY.fxml")));
         // Устанавливаем минимальный размер окна
         stage.setMinHeight(550);
