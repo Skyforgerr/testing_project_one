@@ -5,19 +5,19 @@
 
 
 <?import javafx.scene.control.Label?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+<AnchorPane fx:controller="com.example.testing_project_one.YYController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
             prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
             stylesheets="bootstrapfx.css" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
             AnchorPane.bottomAnchor="0" style="-fx-background-image: url(back.jpg); -fx-background-size: cover">
-   <Button AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20" mnemonicParsing="false" text="Добавить"
+   <Button AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20" mnemonicParsing="false" text="Добавить" onAction="#insertGoods"
            styleClass="btn"/>
-   <TextField layoutX="20.0" layoutY="60.0" prefHeight="26.0" prefWidth="570.0"
+   <TextField fx:id="name" layoutX="20.0" layoutY="60.0" prefHeight="26.0" prefWidth="570.0"
               style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa"/>
-   <TextField layoutX="20.0" layoutY="125.0" prefHeight="26.0" prefWidth="170.0"
+   <TextField fx:id="amount" layoutX="20.0" layoutY="125.0" prefHeight="26.0" prefWidth="170.0"
               style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa"/>
-   <TextField layoutX="20.0" layoutY="190.0" prefHeight="26.0" prefWidth="170.0"
+   <TextField fx:id="cost_out" layoutX="20.0" layoutY="190.0" prefHeight="26.0" prefWidth="170.0"
               style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa"/>
-   <TextField layoutX="420.0" layoutY="190.0" prefHeight="26.0" prefWidth="170.0"
+   <TextField fx:id="cost_in" layoutX="420.0" layoutY="190.0" prefHeight="26.0" prefWidth="170.0"
               style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa"/>
 
    <Label layoutX="20.0" layoutY="27.0" text="Название товара" styleClass="lbl,lbl-warning"
