@@ -10,7 +10,7 @@
             stylesheets="bootstrapfx.css" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
             AnchorPane.bottomAnchor="0" style="-fx-background-image: url(back.jpg); -fx-background-size: cover">
    <Button AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20" mnemonicParsing="false" text="Добавить" onAction="#insertGoods"
-           styleClass="btn"/>
+           styleClass="btn" fx:id="new_good"/>
    <TextField fx:id="name" layoutX="20.0" layoutY="60.0" prefHeight="26.0" prefWidth="570.0"
               style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa"/>
    <TextField fx:id="amount" layoutX="20.0" layoutY="125.0" prefHeight="26.0" prefWidth="170.0"

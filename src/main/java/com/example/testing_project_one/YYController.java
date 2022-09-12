@@ -37,6 +37,8 @@ public class YYController {
     @FXML
     Button del;
     @FXML
+    Button new_good;
+    @FXML
     TextField name;
     @FXML
     TextField amount;
@@ -84,6 +86,10 @@ public class YYController {
         System.out.println("Created all the tables...");
     }
     public void insertGoods() throws SQLException {
+        // Закрытие окна
+        Stage stage_del = (Stage) new_good.getScene().getWindow();
+        stage_del.close();
+
         connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement;
         try {
