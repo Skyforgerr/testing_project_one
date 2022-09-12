@@ -101,11 +101,13 @@ public class YYController {
         try {
             int id = 0;
             id = id + 1;
-            goods = new Goods(name.getText(), Integer.parseInt(amount.getText()), Integer.parseInt(cost_out.getText()), Integer.parseInt(cost_in.getText()), (Integer.parseInt(cost_in.getText()) - Integer.parseInt(cost_out.getText())));
+            goods = new Goods(name.getText(), Integer.parseInt(amount.getText()), Integer.parseInt(cost_out.getText()),
+                    Integer.parseInt(cost_in.getText()),
+                    Integer.parseInt("-" + cost_in.getText()));
             System.out.println("Adding goods to the table");
             String addingGoods = "INSERT INTO GOODS (name, amount, cost_out, cost_in, profit)" +
                     "VALUES ('" + goods.getName() + "', '" + goods.getAmount() + "', '" + goods.getCost_out() +
-                    "', '" + goods.getCost_in() + "', '" + Math.abs(goods.getCost_out() - goods.getCost_in()) + "');";
+                    "', '" + goods.getCost_in() + "', '" + goods.getProfit() + "');";
             statement.executeUpdate(addingGoods);
         } catch (NumberFormatException e) {
             Stage stage = new Stage();
