@@ -48,7 +48,7 @@ public class YYController {
 
 
 
-    //doing some shit
+    //Запуск бд
     public void startDataBase() {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -64,25 +64,24 @@ public class YYController {
     public void createDataBase() throws SQLException {
         Statement statement = connection.createStatement();
         String tableA = "CREATE TABLE IF NOT EXISTS GOODS" +
-                "(id_goods int AUTOI_NCREMENT, " +
+                "(id_goods INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name text, " +
                 "amount int, " +
                 "cost_out int, " +
                 "cost_in int, " +
-                "profit int, " +
-                "PRIMARY KEY (id_goods));";
+                "profit int); ";
         statement.executeUpdate(tableA);
         String sql1 = "CREATE TABLE IF NOT EXISTS CHANGES" +
-                "(id_changes int AUTO_INCREMENT, " +
+                "(id_changes INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "id_goods int, " +
                 "comment text, " +
-                "PRIMARY KEY (id_changes), " +
                 "FOREIGN KEY (id_goods) REFERENCES goods (id_goods));";
         statement.executeUpdate(sql1);
         String sql2 = "CREATE TABLE IF NOT EXISTS MONEY" +
                 "(all_the_money int, " +
                 "all_the_lost int);";
         statement.executeUpdate(sql2);
+        System.out.println("Created all the tables...");
     }
     public void insertGoods() throws SQLException {
         connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
@@ -94,6 +93,8 @@ public class YYController {
         }
         Goods goods = null;
         try {
+            int id = 0;
+            id = id + 1;
             goods = new Goods(name.getText(), Integer.parseInt(amount.getText()), Integer.parseInt(cost_out.getText()), Integer.parseInt(cost_in.getText()), (Integer.parseInt(cost_in.getText()) - Integer.parseInt(cost_out.getText())));
             System.out.println("Adding goods to the table");
             String addingGoods = "INSERT INTO GOODS (name, amount, cost_out, cost_in, profit)" +
@@ -124,14 +125,70 @@ public class YYController {
 
     }
 
-    //doing some shit
+    // работа с выводом в верхнюю таблицу
+    private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
+
+    @FXML
+    private TableView<Goods> tableGoods;
+
+    @FXML
+    private TableColumn<Goods, Integer> idColumn;
+
+    @FXML
+    private TableColumn<Goods, String> nameColumn;
+
+    @FXML
+    private TableColumn<Goods, Integer> amountColumn;
+
+    @FXML
+    private TableColumn<Goods, Integer> costOutColumn;
+
+    @FXML
+    private TableColumn<Goods, Integer> costInColumn;
+
+    @FXML
+    private TableColumn<Goods, Integer> profitColumn;
 
 
+    @FXML
+    private void initialize() throws SQLException {
+        initData();
+        try {
+            idColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id_goods"));
+            nameColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
+            amountColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("amount"));
+            costOutColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("cost_out"));
+            costInColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("cost_in"));
+            profitColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("profit"));
+
+            tableGoods.setItems(goodsData);
+        }catch(NullPointerException e){
+
+        }
+    }
+
+    private void initData() throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+
+        String sql = "SELECT id_goods, name, amount, cost_out, cost_in, profit FROM GOODS WHERE id_goods = (SELECT MAX(id_goods)FROM GOODS)";
+
+        Statement statement = connection.createStatement();
+        ResultSet rs;
+        rs = statement.executeQuery(sql);
+
+        while (rs.next()) {
+            int id_goods = rs.getInt(1);
+            String name = rs.getString(2);
+            int amount = rs.getInt(3);
+            int cost_out = rs.getInt(4);
+            int cost_in = rs.getInt(5);
+            int profit = rs.getInt(6);
+            goodsData.add(new Goods(name, amount, cost_out, cost_in, profit));
+        }
+    }
 
 
-
-
-
+    //окна
     public void settings() {
         Stage stage = new Stage();
         Group group = new Group();
@@ -240,61 +297,5 @@ public class YYController {
         stage_change.show();
     }
 
-    // работа с выводом в верхнюю таблицу
-    private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
 
-    @FXML
-    private TableView<Goods> tableGoods;
-
-    @FXML
-    private TableColumn<Goods, Integer> idColumn;
-
-    @FXML
-    private TableColumn<Goods, String> nameColumn;
-
-    @FXML
-    private TableColumn<Goods, Integer> amountColumn;
-
-    @FXML
-    private TableColumn<Goods, Integer> costOutColumn;
-
-    @FXML
-    private TableColumn<Goods, Integer> costInColumn;
-
-    @FXML
-    private TableColumn<Goods, Integer> profitColumn;
-
-
-    @FXML
-    private void initialize() throws SQLException {
-        initData();
-
-        idColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
-        amountColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("amount"));
-        costOutColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("cost_out"));
-        costInColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("cost_in"));
-        profitColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("profit"));
-
-        tableGoods.setItems(goodsData);
-    }
-
-    private void initData() throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
-
-        String sql = "SELECT id_goods, name, amount, cost_out, cost_in, profit FROM GOODS";
-        Statement statement = connection.createStatement();
-        ResultSet rs;
-        rs = statement.executeQuery(sql);
-
-        while (rs.next()) {
-            int id_goods = rs.getInt(1);
-            String name = rs.getString(2);
-            int amount = rs.getInt(3);
-            int cost_out = rs.getInt(4);
-            int cost_in = rs.getInt(5);
-            int profit = rs.getInt(6);
-            goodsData.add(new Goods(name, amount, cost_out, cost_in, profit));
-        }
-    }
 }
