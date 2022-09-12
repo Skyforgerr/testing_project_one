@@ -154,6 +154,8 @@ public class YYController {
     private void initialize() throws SQLException {
         initData();
         try {
+            //idColumn.setCellValueFactory(cellData ->cellData.getValue().dateProperty());
+
             idColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id_goods"));
             nameColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
             amountColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("amount"));
