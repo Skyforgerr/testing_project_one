@@ -1,11 +1,16 @@
 package com.example.testing_project_one;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -129,6 +134,48 @@ public class YYController {
         stage_change.setScene(sale_scene);
         stage_change.setTitle("Удаление товара");
         stage_change.show();
+    }
+    // работа с выводом в верхнюю таблицу
+    private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
+
+    @FXML
+    private TableView<Goods> tableGoods;
+
+    @FXML
+    private TableColumn<Goods, Integer> idColumn;
+
+    @FXML
+    private TableColumn<Goods, String> nameColumn;
+
+    @FXML
+    private TableColumn<Goods, Integer> amountColumn;
+
+    @FXML
+    private TableColumn<Goods, Integer> costOutColumn;
+
+    @FXML
+    private TableColumn<Goods, Integer> costInColumn;
+
+    @FXML
+    private TableColumn<Goods, Integer> profitColumn;
+
+
+    @FXML
+    private void initialize(){
+        initData();
+
+        idColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
+        amountColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("amount"));
+        costOutColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("costOut"));
+        costInColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("costIn"));
+        profitColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("profit"));
+
+        tableGoods.setItems(goodsData);
+    }
+
+    private void initData(){
+        goodsData.add(new Goods("name1", 2, 4, 3, 3));
     }
 
 }

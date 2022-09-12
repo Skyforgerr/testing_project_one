@@ -73,7 +73,7 @@ public class DataBase {
         }
         Goods goods = null;
         try {
-            goods = new Goods(name.getText(), Integer.parseInt(amount.getText()), Integer.parseInt(cost_out.getText()), Integer.parseInt(cost_in.getText()));
+            goods = new Goods(name.getText(), Integer.parseInt(amount.getText()), Integer.parseInt(cost_out.getText()), Integer.parseInt(cost_in.getText()), (Integer.parseInt(cost_in.getText()) - Integer.parseInt(cost_out.getText())));
             System.out.println("Adding goods to the table");
             String addingGoods = "INSERT INTO GOODS (name, amount, cost_out, cost_in, profit)" +
                     "VALUES ('" + goods.getName() + "', '" + goods.getAmount() + "', '" + goods.getCost_out() +

@@ -10,7 +10,7 @@ public class Goods {
     private int cost_out;
     private int profit;
 
-    public Goods(String name, int amount, int cost_in, int cost_out) {
+    public Goods(String name, int amount, int cost_in, int cost_out, int profit) {
         this.name = name;
         this.amount = amount;
         this.cost_in = cost_in;

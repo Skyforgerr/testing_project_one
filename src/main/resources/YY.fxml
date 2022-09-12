@@ -49,14 +49,14 @@
             <RowConstraints minHeight="10.0" prefHeight="103.9999786376953" vgrow="SOMETIMES"/>
         </rowConstraints>
         <TableView prefHeight="227.0" prefWidth="600.0" minHeight="227.0" GridPane.columnIndex="1"
-                   GridPane.rowIndex="2">
+                   GridPane.rowIndex="2" fx:id="tableGoods">
             <columns>
-                <TableColumn prefWidth="30.4000244140625" text="№"/>
-                <TableColumn prefWidth="187.199951171875" text="Название товара"/>
-                <TableColumn prefWidth="80.4000244140625" text="Количество"/>
-                <TableColumn prefWidth="62.4000244140625" text="Цена"/>
-                <TableColumn prefWidth="92.0" text="Затраты"/>
-                <TableColumn prefWidth="142.4000244140625" text="Прибыль"/>
+                <TableColumn prefWidth="30.4000244140625" text="№" fx:id="idColumn"/>
+                <TableColumn prefWidth="187.199951171875" text="Название товара" fx:id="nameColumn"/>
+                <TableColumn prefWidth="80.4000244140625" text="Количество" fx:id="amountColumn"/>
+                <TableColumn prefWidth="62.4000244140625" text="Цена" fx:id="costOutColumn"/>
+                <TableColumn prefWidth="92.0" text="Затраты" fx:id="costInColumn"/>
+                <TableColumn prefWidth="142.4000244140625" text="Прибыль" fx:id="profitColumn"/>
             </columns>
         </TableView>
         <BorderPane prefHeight="24.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
