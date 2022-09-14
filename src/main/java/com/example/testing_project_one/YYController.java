@@ -160,10 +160,8 @@ public class YYController {
         } catch (Exception e) {
             throw new RuntimeException("unhandled", e);
         }
-        Goods goods = null;
+        Goods goods;
         try {
-            int id = 0;
-            id = id + 1;
             goods = new Goods(name.getText(), Integer.parseInt(amount.getText()), Integer.parseInt(cost_out.getText()),
                     Integer.parseInt(cost_in.getText()),
                     Integer.parseInt("-" + cost_in.getText()));
@@ -202,11 +200,9 @@ public class YYController {
 
     @FXML
     private void initialize() throws SQLException {
-        initData();
+        new_data();
         try {
-            //idColumn.setCellValueFactory(cellData ->cellData.getValue().dateProperty());
-
-            //idColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id_goods"));
+            idColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id_goods"));
             nameColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
             amountColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("amount"));
             costOutColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("cost_out"));
@@ -215,27 +211,20 @@ public class YYController {
 
             tableGoods.setItems(goodsData);
         }catch(NullPointerException e){
-
+            e.printStackTrace();
         }
     }
-
-    private void initData() throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
-
-        String sql = "SELECT id_goods, name, amount, cost_out, cost_in, profit FROM GOODS WHERE id_goods = (SELECT MAX(id_goods)FROM GOODS)";
-
+    @FXML
+    private void new_data() throws SQLException{
+        goodsData.clear();
+        connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
-        ResultSet rs;
-        rs = statement.executeQuery(sql);
-
+        ResultSet rs = statement.executeQuery("select * from GOODS");
+        int n = 1;
         while (rs.next()) {
-            int id_goods = rs.getInt(1);
-            String name = rs.getString(2);
-            int amount = rs.getInt(3);
-            int cost_out = rs.getInt(4);
-            int cost_in = rs.getInt(5);
-            int profit = rs.getInt(6);
-            goodsData.add(new Goods(name, amount, cost_out, cost_in, profit));
+            goodsData.add(new Goods(n, rs.getString(2), rs.getInt(3), rs.getInt(4),
+                    rs.getInt(5), rs.getInt(6)));
+            n++;
         }
     }
 
@@ -246,7 +235,8 @@ public class YYController {
         Group group = new Group();
         Scene scene = new Scene(group);
         Button button = new Button("Удалить всё");
-        button.setStyle("-fx-background-color: Red; -fx-border-color: darkred; -fx-border-radius: 50px; -fx-padding: 10px");
+        button.setStyle("-fx-background-color: Red; -fx-border-color: darkred; -fx-border-radius: 50px; " +
+                "-fx-padding: 10px");
         button.minHeight(100);
         button.minWidth(100);
 
@@ -263,7 +253,8 @@ public class YYController {
         Stage stage = new Stage();
         stage.setMinHeight(400);
         stage.setMinWidth(600);
-        Parent content = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("new_good.fxml")));
+        Parent content = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(
+                "new_good.fxml")));
         Scene scene = new Scene(anchorPane);
         anchorPane.getChildren().add(content);
         stage.setTitle("Добавление товара");

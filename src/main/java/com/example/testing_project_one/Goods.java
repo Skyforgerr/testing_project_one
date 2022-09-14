@@ -12,16 +12,16 @@ import java.util.ListIterator;
 /**
  * @author Ivan 12.09.2022
  */
-public class Goods{
-    //private int id_goods;
+
+public class Goods {
+    private int id_goods;
     private String name;
     private int amount;
     private int cost_in;
     private int cost_out;
     private int profit;
 
-    public Goods(String name, int amount, int cost_in, int cost_out, int profit) {
-        //this.id_goods = id_goods;
+    public Goods( String name, int amount, int cost_in, int cost_out, int profit) {
         this.name = name;
         this.amount = amount;
         this.cost_in = cost_in;
@@ -29,13 +29,22 @@ public class Goods{
         this.profit = profit;
     }
 
-//    public int getId() {
-//        return id_goods;
-//    }
-//
-//    public void setId(int id) {
-//        this.id_goods = id_goods;
-//    }
+    public Goods(int id_goods, String name, int amount, int cost_in, int cost_out, int profit) {
+        this.id_goods = id_goods;
+        this.name = name;
+        this.amount = amount;
+        this.cost_in = cost_in;
+        this.cost_out = cost_out;
+        this.profit = profit;
+    }
+
+    public int getId_goods() {
+        return id_goods;
+    }
+
+    public void setId(int id) {
+        this.id_goods = id_goods;
+    }
 
     public int getProfit() {
         return profit;
