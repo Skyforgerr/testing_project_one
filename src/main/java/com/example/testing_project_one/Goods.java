@@ -1,9 +1,18 @@
 package com.example.testing_project_one;
 
+import javafx.beans.InvalidationListener;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 /**
  * @author Ivan 12.09.2022
  */
-public class Goods {
+public class Goods{
     //private int id_goods;
     private String name;
     private int amount;
@@ -67,5 +76,4 @@ public class Goods {
     public void setCost_out(int cost_out) {
         this.cost_out = cost_out;
     }
-
 }
