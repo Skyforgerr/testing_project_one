@@ -25,7 +25,6 @@ public class New_changeController extends SaleController{
 
     public void good_window() throws IOException, SQLException {
         // Закрытие предыдущего окна
-        initializeSmall();
         Stage stage = (Stage) good.getScene().getWindow();
         stage.close();
 
@@ -41,7 +40,7 @@ public class New_changeController extends SaleController{
 
     public void sale_window() throws IOException, SQLException {
         // Закрытие предыдущего окна
-        initializeSmall();
+
         Stage stage = (Stage) sale.getScene().getWindow();
         stage.close();
 
@@ -55,6 +54,7 @@ public class New_changeController extends SaleController{
         stage_change.setScene(sale_scene);
         stage_change.setTitle("Продажа товара");
         stage_change.show();
+        //initializeSmall();
     }
 
     public void up_window() throws IOException {

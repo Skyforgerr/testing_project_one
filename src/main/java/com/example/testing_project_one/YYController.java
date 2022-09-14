@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,7 +27,7 @@ import java.util.Objects;
 /**
  * @author Pavel
  */
-public class YYController {
+public class YYController  {
     Stage stage_change = new Stage();
     Connection connection;
 
@@ -78,6 +79,7 @@ public class YYController {
 
     // работа с выводом в верхнюю таблицу
     private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
+    private ObservableList<Goods> saleData = FXCollections.observableArrayList();
     @FXML private TableView<Goods> tableGoods;
     @FXML private TableColumn<Goods, Integer> idColumn;
     @FXML private TableColumn<Goods, String> nameColumn;
@@ -85,6 +87,9 @@ public class YYController {
     @FXML private TableColumn<Goods, Integer> costOutColumn;
     @FXML private TableColumn<Goods, Integer> costInColumn;
     @FXML private TableColumn<Goods, Integer> profitColumn;
+    @FXML private TableView<Goods> tableView;
+    @FXML private TableColumn<Goods, Integer> idGoodsColumn;
+    @FXML private TableColumn<Goods, String> nameGoodsColumn;
 
     @FXML
     private void initialize() throws SQLException {
@@ -100,6 +105,26 @@ public class YYController {
             tableGoods.setItems(goodsData);
         }catch(NullPointerException e){
             e.printStackTrace();
+        }
+
+        new_dataSmall();
+        try {
+            idGoodsColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id_goods"));
+            nameGoodsColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
+            tableView.setItems(saleData);
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
+
+    }
+    @FXML
+    private void new_dataSmall() throws SQLException{
+        saleData.clear();
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("select * from GOODS");
+        while (rs.next()) {
+            saleData.add(new Goods(rs.getInt(1), rs.getString(2)));
         }
     }
     // Добавляет данные в таблицу
