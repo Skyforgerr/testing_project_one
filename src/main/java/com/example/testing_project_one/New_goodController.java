@@ -8,10 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * @author Pavel
@@ -45,6 +42,13 @@ public class New_goodController {
                     goods.getName() + "', '" + goods.getAmount() + "', '" + goods.getCost_out() +
                     "', '" + goods.getCost_in() + "', '" + goods.getProfit() + "');";
             statement.executeUpdate(addingGoods);
+            Date date = new Date(System.currentTimeMillis());
+            System.out.println(date);
+            String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
+                    statement.executeQuery("SELECT id_goods FROM GOODS WHERE id_goods = " +
+                            "(SELECT MAX(id_goods) FROM GOODS)").getInt(1) + "', '" + date + "', 'Добавлен товар " +
+                    goods.getName() + " в количестве " + goods.getAmount() + " с затратами " + goods.getCost_in() + "')";
+            statement.executeUpdate(new_change);
         } catch (NumberFormatException e) {
             Stage stage = new Stage();
             stage.setMinHeight(100);
