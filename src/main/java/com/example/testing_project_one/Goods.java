@@ -29,6 +29,11 @@ public class Goods {
         this.profit = profit;
     }
 
+    public Goods(int id_goods, String name){
+        this.name = name;
+        this.id_goods = id_goods;
+    }
+
     public Goods(int id_goods, String name, int amount, int cost_in, int cost_out, int profit) {
         this.id_goods = id_goods;
         this.name = name;

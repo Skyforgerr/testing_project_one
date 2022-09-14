@@ -9,12 +9,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 /**
  * @author Pavel
  */
-public class New_changeController {
+public class New_changeController extends SaleController{
     @FXML Button good;
     @FXML Button sale;
     @FXML Button up;
@@ -22,8 +23,9 @@ public class New_changeController {
     @FXML Button del;
     Stage stage_change = new Stage();
 
-    public void good_window() throws IOException {
+    public void good_window() throws IOException, SQLException {
         // Закрытие предыдущего окна
+        initializeSmall();
         Stage stage = (Stage) good.getScene().getWindow();
         stage.close();
 
@@ -37,8 +39,9 @@ public class New_changeController {
         stage_change.show();
     }
 
-    public void sale_window() throws IOException {
+    public void sale_window() throws IOException, SQLException {
         // Закрытие предыдущего окна
+        initializeSmall();
         Stage stage = (Stage) sale.getScene().getWindow();
         stage.close();
 
