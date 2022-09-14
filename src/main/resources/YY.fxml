@@ -51,6 +51,6 @@
     </GridPane>
     <Button mnemonicParsing="false" onAction="#new_good" styleClass="btn" text="Добавить товар" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" />
     <Button mnemonicParsing="false" onAction="#new_change" styleClass="btn" text="Добавить изменение" AnchorPane.bottomAnchor="10" AnchorPane.rightAnchor="10" />
-   <Button alignment="BOTTOM_LEFT" layoutX="126.0" layoutY="396.0" mnemonicParsing="false" onAction="#initialize" text="Обновить"
+   <Button alignment="BOTTOM_LEFT" layoutX="126.0" layoutY="396.0" mnemonicParsing="false" onAction="#new_data" text="Обновить"
            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="150" styleClass="btn"/>
 </AnchorPane>
