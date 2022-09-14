@@ -75,6 +75,8 @@ public class YYController  {
     // работа с выводом в верхнюю таблицу
     private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
     private ObservableList<Goods> saleData = FXCollections.observableArrayList();
+    private ObservableList<Goods> amountData = FXCollections.observableArrayList();
+    private ObservableList<Goods> deleteData = FXCollections.observableArrayList();
     @FXML private TableView<Goods> tableGoods;
     @FXML private TableColumn<Goods, Integer> idColumn;
     @FXML private TableColumn<Goods, String> nameColumn;
@@ -82,9 +84,18 @@ public class YYController  {
     @FXML private TableColumn<Goods, Integer> costOutColumn;
     @FXML private TableColumn<Goods, Integer> costInColumn;
     @FXML private TableColumn<Goods, Integer> profitColumn;
+    //вывод в таблицу с продажами
     @FXML private TableView<Goods> tableView;
     @FXML private TableColumn<Goods, Integer> idGoodsColumn;
     @FXML private TableColumn<Goods, String> nameGoodsColumn;
+    //изменение количества товара
+    @FXML private TableView<Goods> amountView;
+    @FXML private TableColumn<Goods, Integer> idAmountColumn;
+    @FXML private TableColumn<Goods, String> nameAmountColumn;
+    //удаление товара из бд
+    @FXML private TableView<Goods> deleteView;
+    @FXML private TableColumn<Goods, Integer> idDeleteColumn;
+    @FXML private TableColumn<Goods, String> nameDeleteColumn;
 
     @FXML
     private void initialize() throws SQLException {
@@ -110,6 +121,23 @@ public class YYController  {
         }catch(NullPointerException e){
             //e.printStackTrace();
         }
+        new_dataAmount();
+        try {
+            idAmountColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id_goods"));
+            nameAmountColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
+            amountView.setItems(amountData);
+        }catch(NullPointerException e){
+            //e.printStackTrace();
+        }
+        new_dataDelete();
+        try {
+            idDeleteColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id_goods"));
+            nameDeleteColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
+            deleteView.setItems(deleteData);
+        }catch(NullPointerException e){
+            //e.printStackTrace();
+        }
+
 
     }
     @FXML
@@ -122,6 +150,26 @@ public class YYController  {
             saleData.add(new Goods(rs.getInt(1), rs.getString(2)));
         }
     }
+    @FXML
+    private void new_dataAmount() throws SQLException{
+        deleteData.clear();
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("select * from GOODS");
+        while (rs.next()) {
+            amountData.add(new Goods(rs.getInt(1), rs.getString(2)));
+        }
+    }
+    @FXML
+    private void new_dataDelete() throws SQLException{
+        deleteData.clear();
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("select * from GOODS");
+        while (rs.next()) {
+            deleteData.add(new Goods(rs.getInt(1), rs.getString(2)));
+        }
+    }
     // Добавляет данные в таблицу
     @FXML
     private void new_data() throws SQLException{
@@ -129,10 +177,10 @@ public class YYController  {
         goodsData.clear();
         connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
-        allTheMoney.setText("Бюджет: "
-                +  statement.executeQuery("SELECT all_the_money FROM MONEY").getInt(1)
-                + " Прибыль: "
-                + statement.executeQuery("SELECT all_the_lost FROM MONEY").getInt(1));
+//        allTheMoney.setText("Бюджет: "
+//                +  statement.executeQuery("SELECT all_the_money FROM MONEY").getInt(1)
+//                + " Прибыль: "
+//                + statement.executeQuery("SELECT all_the_lost FROM MONEY").getInt(1));
         ResultSet rs = statement.executeQuery("select * from GOODS");
         int n = 1;
         while (rs.next()) {

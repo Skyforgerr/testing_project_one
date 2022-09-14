@@ -15,7 +15,7 @@ import java.util.Objects;
 /**
  * @author Pavel
  */
-public class New_changeController extends SaleController{
+public class New_changeController{
     @FXML Button good;
     @FXML Button sale;
     @FXML Button up;
@@ -23,22 +23,21 @@ public class New_changeController extends SaleController{
     @FXML Button del;
     Stage stage_change = new Stage();
 
-    public void good_window() throws IOException, SQLException {
+    public void good_window() throws IOException{
         // Закрытие предыдущего окна
         Stage stage = (Stage) good.getScene().getWindow();
         stage.close();
 
         stage_change.setMinHeight(400);
         stage_change.setMinWidth(650);
-        Parent sale_content = FXMLLoader.load(
-                Objects.requireNonNull(getClass().getClassLoader().getResource("good.fxml")));
+        Parent sale_content = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("good.fxml")));
         Scene sale_scene = new Scene(sale_content);
         stage_change.setScene(sale_scene);
         stage_change.setTitle("Изменение количества товара");
         stage_change.show();
     }
 
-    public void sale_window() throws IOException, SQLException {
+    public void sale_window() throws IOException{
         // Закрытие предыдущего окна
 
         Stage stage = (Stage) sale.getScene().getWindow();
