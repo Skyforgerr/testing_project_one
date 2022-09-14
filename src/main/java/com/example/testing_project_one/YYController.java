@@ -110,7 +110,7 @@ public class YYController  {
 
             tableGoods.setItems(goodsData);
         }catch(NullPointerException e){
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         new_dataSmall();
@@ -177,16 +177,21 @@ public class YYController  {
         goodsData.clear();
         connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
-//        allTheMoney.setText("Бюджет: "
-//                +  statement.executeQuery("SELECT all_the_money FROM MONEY").getInt(1)
-//                + " Прибыль: "
-//                + statement.executeQuery("SELECT all_the_lost FROM MONEY").getInt(1));
-        ResultSet rs = statement.executeQuery("select * from GOODS");
-        int n = 1;
-        while (rs.next()) {
-            goodsData.add(new Goods(n, rs.getString(2), rs.getInt(3), rs.getInt(4),
-                    rs.getInt(5), rs.getInt(6)));
-            n++;
+        try {
+            allTheMoney.setText("Бюджет: "
+                    + statement.executeQuery("SELECT all_the_money FROM MONEY").getInt(1)
+                    + " Прибыль: "
+                    + statement.executeQuery("SELECT all_the_lost FROM MONEY").getInt(1));
+            ResultSet rs = statement.executeQuery("select * from GOODS");
+
+            int n = 1;
+            while (rs.next()) {
+                goodsData.add(new Goods(n, rs.getString(2), rs.getInt(3), rs.getInt(4),
+                        rs.getInt(5), rs.getInt(6)));
+                n++;
+            }
+        }catch(NullPointerException e){
+            //e.printStackTrace();
         }
     }
 

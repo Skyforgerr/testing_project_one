@@ -18,7 +18,8 @@
                AnchorPane.leftAnchor="30" AnchorPane.bottomAnchor="70" AnchorPane.topAnchor="30">
       <columns>
           <TableColumn fx:id="idGoodsColumn" maxWidth="100" text="ID Товара" style="-fx-font-size: 10px"/>
-          <TableColumn fx:id="nameGoodsColumn" minWidth="225" text="Название товара" style="-fx-font-size: 10px" />
+          <TableColumn fx:id="nameGoodsColumn" minWidth="165" text="Название товара" style="-fx-font-size: 10px"/>
+          <TableColumn fx:id="amountGoodsColumn" minWidth="35" text="Кол-во" style="-fx-font-size: 10px"/>
       </columns>
     </TableView>
     <Button layoutX="523.0" layoutY="360.0" mnemonicParsing="false" text="Продать" styleClass="btn"
