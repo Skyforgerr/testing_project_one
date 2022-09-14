@@ -6,7 +6,7 @@
 
 <?import javafx.scene.control.Label?>
 <AnchorPane fx:controller="com.example.testing_project_one.New_goodController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
             stylesheets="bootstrapfx.css" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
             AnchorPane.bottomAnchor="0" style="-fx-background-image: url(back.jpg); -fx-background-size: cover">
    <Button AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20" mnemonicParsing="false" text="Добавить" onAction="#insertGoods"

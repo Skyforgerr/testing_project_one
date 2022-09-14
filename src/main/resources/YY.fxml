@@ -3,18 +3,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-color: grey; -fx-background-image: url(main_back.jpg)" stylesheets="bootstrapfx.css" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.testing_project_one.YYController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            style="-fx-border-color: grey; -fx-background-image: url(main_back.jpg)"
+            stylesheets="bootstrapfx.css" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+            AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.testing_project_one.YYController">
     <MenuBar AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
         <Menu mnemonicParsing="false" text="Главное">
             <MenuItem mnemonicParsing="false" onAction="#settings" text="Настройки" />
         </Menu>
     </MenuBar>
-    <BorderPane prefHeight="20.0" prefWidth="600.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="30">
+    <BorderPane prefHeight="20.0" prefWidth="600.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+                AnchorPane.topAnchor="30">
         <center>
-            <Label style="-fx-font-size: 12px" styleClass="lbl,lbl-warning" text="Бюджет: " BorderPane.alignment="CENTER" />
+            <Label style="-fx-font-size: 12px" styleClass="lbl,lbl-warning" text="Бюджет: "
+                   BorderPane.alignment="CENTER" />
         </center>
     </BorderPane>
-    <GridPane prefHeight="329.0" prefWidth="600.0" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="50">
+    <GridPane prefHeight="329.0" prefWidth="600.0" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="0"
+              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="50">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="10" minWidth="10.0" prefWidth="0.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="575.4" />
@@ -24,10 +31,12 @@
             <RowConstraints />
             <RowConstraints />
             <RowConstraints minHeight="10.0" prefHeight="201.5999755859375" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="24.4000244140625" minHeight="18.4000244140625" prefHeight="24.4000244140625" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="24.4000244140625" minHeight="18.4000244140625" prefHeight="24.4000244140625"
+                            vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="103.9999786376953" vgrow="SOMETIMES" />
         </rowConstraints>
-        <TableView fx:id="tableGoods" minHeight="227.0" prefHeight="227.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <TableView fx:id="tableGoods" minHeight="227.0" prefHeight="227.0" prefWidth="600.0" GridPane.columnIndex="1"
+                   GridPane.rowIndex="2">
             <columns>
                 <TableColumn fx:id="idColumn" prefWidth="30.4000244140625" text="№" />
                 <TableColumn fx:id="nameColumn" prefWidth="187.199951171875" text="Название товара" />
@@ -39,18 +48,22 @@
         </TableView>
         <BorderPane prefHeight="24.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
             <center>
-                <Label style="-fx-font-size: 12px" styleClass="lbl,lbl-warning" text="Последние изменения" BorderPane.alignment="CENTER" />
+                <Label style="-fx-font-size: 12px" styleClass="lbl,lbl-warning" text="Последние изменения"
+                       BorderPane.alignment="CENTER" />
             </center>
         </BorderPane>
-        <TableView minHeight="110.0" prefHeight="110.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <TableView minHeight="110.0" prefHeight="110.0" prefWidth="600.0" GridPane.columnIndex="1"
+                   GridPane.rowIndex="4">
             <columns>
                 <TableColumn prefWidth="75.0" text="Дата" />
                 <TableColumn prefWidth="523.199951171875" text="Изменение" />
             </columns>
         </TableView>
     </GridPane>
-    <Button mnemonicParsing="false" onAction="#new_good" styleClass="btn" text="Добавить товар" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" />
-    <Button mnemonicParsing="false" onAction="#new_change" styleClass="btn" text="Добавить изменение" AnchorPane.bottomAnchor="10" AnchorPane.rightAnchor="10" />
-   <Button alignment="BOTTOM_LEFT" layoutX="126.0" layoutY="396.0" mnemonicParsing="false" onAction="#new_data" text="Обновить"
-           AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="150" styleClass="btn"/>
+    <Button mnemonicParsing="false" onAction="#new_good" styleClass="btn" text="Добавить товар"
+            AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" />
+    <Button mnemonicParsing="false" onAction="#new_change" styleClass="btn" text="Добавить изменение"
+            AnchorPane.bottomAnchor="10" AnchorPane.rightAnchor="10" />
+   <Button alignment="BOTTOM_LEFT" layoutX="126.0" layoutY="396.0" mnemonicParsing="false" onAction="#new_data"
+           text="Обновить" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="150" styleClass="btn"/>
 </AnchorPane>
