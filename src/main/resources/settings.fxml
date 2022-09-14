@@ -13,5 +13,5 @@
    <Button layoutX="20.0" layoutY="48.0" mnemonicParsing="false" text="Удалить все изменения" styleClass="btn"
            onAction="#del_changes" fx:id="del_all_changes"/>
    <Button layoutX="60.0" layoutY="81.0" mnemonicParsing="false" text="Удалить всё" styleClass="btn"
-   onAction="#del_all"/>
+   onAction="#del_all_bd" fx:id="del_all"/>
 </AnchorPane>

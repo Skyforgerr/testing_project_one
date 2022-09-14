@@ -25,7 +25,7 @@ public class SettingsController {
         connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         try {
             Statement statement = connection.createStatement();
-            statement.executeQuery("delete from goods");
+            statement.executeUpdate("delete from goods");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -38,20 +38,21 @@ public class SettingsController {
         connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         try {
             Statement statement = connection.createStatement();
-            statement.executeQuery("delete from changes");
+            statement.executeUpdate("delete from changes");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public void del_all() throws SQLException {
+    public void del_all_bd() throws SQLException {
         Stage stage = (Stage) del_all.getScene().getWindow();
         stage.close();
 
         connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         try {
             Statement statement = connection.createStatement();
-            statement.executeQuery("delete from changes");
-            statement.executeQuery("delete from goods");
+            statement.executeUpdate("delete from changes");
+            statement.executeUpdate("delete from goods");
+            statement.executeUpdate("DELETE FROM money");
         } catch (SQLException e) {
             e.printStackTrace();
         }

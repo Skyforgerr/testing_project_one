@@ -47,8 +47,15 @@ public class New_goodController {
             String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
                     statement.executeQuery("SELECT id_goods FROM GOODS WHERE id_goods = " +
                             "(SELECT MAX(id_goods) FROM GOODS)").getInt(1) + "', '" + date + "', 'Добавлен товар " +
-                    goods.getName() + " в количестве " + goods.getAmount() + " с затратами " + goods.getCost_in() + "')";
+                    goods.getName() + " в количестве " + goods.getAmount() + " с затратами " + goods.getCost_out() + "')";
             statement.executeUpdate(new_change);
+            String out_money = "INSERT INTO money (all_the_money, all_the_lost) VALUES ('"+
+                    (statement.executeQuery("SELECT all_the_money FROM money").getInt(1) -
+                    goods.getCost_out()) + "', '" +
+                    (statement.executeQuery("SELECT all_the_lost FROM money").getInt(1) -
+                            goods.getCost_out()) + "')";
+            statement.executeUpdate("DELETE FROM money");
+            statement.executeUpdate(out_money);
         } catch (NumberFormatException e) {
             Stage stage = new Stage();
             stage.setMinHeight(100);
