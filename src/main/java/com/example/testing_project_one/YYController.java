@@ -15,12 +15,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 /**
  * @author Pavel
  */
-public class YYController  {
+public class YYController  extends MoneyController{
     @FXML Label allTheMoney;
     Stage stage_change = new Stage();
     Connection connection;
@@ -77,6 +79,7 @@ public class YYController  {
     private ObservableList<Goods> saleData = FXCollections.observableArrayList();
     private ObservableList<Goods> amountData = FXCollections.observableArrayList();
     private ObservableList<Goods> deleteData = FXCollections.observableArrayList();
+    private ObservableList<Changes> changesData = FXCollections.observableArrayList();
     @FXML private TableView<Goods> tableGoods;
     @FXML private TableColumn<Goods, Integer> idColumn;
     @FXML private TableColumn<Goods, String> nameColumn;
@@ -96,9 +99,13 @@ public class YYController  {
     @FXML private TableView<Goods> deleteView;
     @FXML private TableColumn<Goods, Integer> idDeleteColumn;
     @FXML private TableColumn<Goods, String> nameDeleteColumn;
+    //таблица с изменениями
+    @FXML private TableView<Changes> changeView;
+    @FXML private TableColumn<Changes, Date> dateColumn;
+    @FXML private TableColumn<Changes, String> changeColumn;
 
     @FXML
-    private void initialize() throws SQLException {
+    private void initialize() throws SQLException, ParseException {
         new_data();
         try {
             idColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id_goods"));
@@ -137,6 +144,14 @@ public class YYController  {
         }catch(NullPointerException e){
             //e.printStackTrace();
         }
+        new_data();
+        try {
+            dateColumn.setCellValueFactory(new PropertyValueFactory<Changes, Date>("day"));
+            changeColumn.setCellValueFactory(new PropertyValueFactory<Changes, String>("comment"));
+            changeView.setItems(changesData);
+        }catch(NullPointerException e){
+            //e.printStackTrace();
+        }
 
 
     }
@@ -170,9 +185,22 @@ public class YYController  {
             deleteData.add(new Goods(rs.getInt(1), rs.getString(2)));
         }
     }
+
+//    @FXML
+//    private void new_dataChange() throws SQLException, ParseException {
+//        changesData.clear();
+//        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+//        Statement statement = connection.createStatement();
+//        ResultSet rs = statement.executeQuery("select * from CHANGES");
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        while (rs.next()) {
+//            java.util.Date date1;
+//                changesData.add(new Changes(date1 = simpleDateFormat.parse(rs.getString(3)), rs.getString(4)));
+//        }
+//    }
     // Добавляет данные в таблицу
     @FXML
-    private void new_data() throws SQLException{
+    private void new_data() throws SQLException, ParseException {
 
         goodsData.clear();
         connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
@@ -192,6 +220,16 @@ public class YYController  {
             }
         }catch(NullPointerException e){
             //e.printStackTrace();
+        }
+
+        changesData.clear();
+        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("select * from CHANGES");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        while (rs.next()) {
+            java.util.Date date1;
+            changesData.add(new Changes(date1 = simpleDateFormat.parse(rs.getString(3)), rs.getString(4)));
         }
     }
 
