@@ -106,7 +106,7 @@ public class YYController  {
             nameGoodsColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
             tableView.setItems(saleData);
         }catch(NullPointerException e){
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
     }
