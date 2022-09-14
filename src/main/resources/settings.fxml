@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:controller="com.example.testing_project_one.SettingsController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0"
+            prefWidth="185.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="bootstrapfx.css" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+            AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">
+   <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Удалить все товары из бд" styleClass="btn"
+   onAction="#del_goods" fx:id="del_all_good"/>
+   <Button layoutX="20.0" layoutY="48.0" mnemonicParsing="false" text="Удалить все изменения" styleClass="btn"
+           onAction="#del_changes" fx:id="del_all_changes"/>
+   <Button layoutX="60.0" layoutY="81.0" mnemonicParsing="false" text="Удалить всё" styleClass="btn"
+   onAction="#del_all"/>
+</AnchorPane>

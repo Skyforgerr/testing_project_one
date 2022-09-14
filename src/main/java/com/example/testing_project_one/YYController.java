@@ -2,6 +2,8 @@ package com.example.testing_project_one;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -26,11 +28,6 @@ import java.util.Objects;
  */
 public class YYController {
     Stage stage_change = new Stage();
-    @FXML Button good;
-    @FXML Button sale;
-    @FXML Button up;
-    @FXML Button down;
-    @FXML Button del;
     Connection connection;
 
     //Запуск бд
@@ -105,6 +102,7 @@ public class YYController {
             e.printStackTrace();
         }
     }
+    // Добавляет данные в таблицу
     @FXML
     private void new_data() throws SQLException{
         goodsData.clear();
@@ -121,20 +119,18 @@ public class YYController {
 
 
     //окна
-    public void settings() {
+    public void settings() throws IOException {
+        AnchorPane anchorPane = new AnchorPane();
         Stage stage = new Stage();
-        Group group = new Group();
-        Scene scene = new Scene(group);
-        Button button = new Button("Удалить всё");
-        button.setStyle("-fx-background-color: Red; -fx-border-color: darkred; -fx-border-radius: 50px; " +
-                "-fx-padding: 10px");
-        button.minHeight(100);
-        button.minWidth(100);
-
-        group.getChildren().add(button);
+        stage.setMinHeight(160);
+        stage.setMinWidth(240);
+        stage.setMaxHeight(160);
+        stage.setMaxWidth(240);
+        Parent content = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(
+                "settings.fxml")));
+        Scene scene = new Scene(anchorPane);
+        anchorPane.getChildren().add(content);
         stage.setTitle("Настройки");
-        stage.setMinWidth(300);
-        stage.setMinHeight(200);
         stage.setScene(scene);
         stage.show();
     }
@@ -151,7 +147,6 @@ public class YYController {
         stage.setTitle("Добавление товара");
         stage.setScene(scene);
         stage.show();
-
     }
 
     public void new_change() throws Exception {
