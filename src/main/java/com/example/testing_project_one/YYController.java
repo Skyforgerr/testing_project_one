@@ -2,22 +2,14 @@ package com.example.testing_project_one;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -57,6 +49,7 @@ public class YYController  {
         String sql1 = "CREATE TABLE IF NOT EXISTS CHANGES" +
                 "(id_changes INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "id_goods int, " +
+                "day datе," +
                 "comment text, " +
                 "FOREIGN KEY (id_goods) REFERENCES goods (id_goods));";
         statement.executeUpdate(sql1);

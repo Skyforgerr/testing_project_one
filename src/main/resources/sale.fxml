@@ -17,9 +17,8 @@
     <TableView fx:id="tableView" layoutX="15.0" layoutY="30.0" prefHeight="200.0" prefWidth="300.0" AnchorPane.rightAnchor="300"
                AnchorPane.leftAnchor="30" AnchorPane.bottomAnchor="70" AnchorPane.topAnchor="30">
       <columns>
-          <TableColumn fx:id="idGoodsColumn" maxWidth="100" text="ID Товара" styleClass="lbl, lbl-warning" style="-fx-font-size: 10px"/>
-          <TableColumn fx:id="nameGoodsColumn" minWidth="225" text="Название товара" styleClass="lbl, lbl-warning"
-                       style="-fx-font-size: 10px" />
+          <TableColumn fx:id="idGoodsColumn" maxWidth="100" text="ID Товара" style="-fx-font-size: 10px"/>
+          <TableColumn fx:id="nameGoodsColumn" minWidth="225" text="Название товара" style="-fx-font-size: 10px" />
       </columns>
     </TableView>
     <Button layoutX="523.0" layoutY="360.0" mnemonicParsing="false" text="Продать" styleClass="btn"
