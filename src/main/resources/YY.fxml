@@ -55,7 +55,7 @@
         <TableView fx:id="changeView" minHeight="110.0" prefHeight="110.0" prefWidth="600.0" GridPane.columnIndex="1"
                    GridPane.rowIndex="4">
             <columns>
-                <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Дата" />
+                <TableColumn fx:id="dateColumn" prefWidth="180.0" text="Дата" />
                 <TableColumn fx:id="changeColumn" prefWidth="523.199951171875" text="Изменение" />
             </columns>
         </TableView>

@@ -6,19 +6,19 @@ import java.util.Date;
  * @author Ivan 15.09.2022
  */
 public class Changes {
-    private Date date;
+    private Date day;
     private String comment;
-    Changes(Date date, String comment){
-        this.date = date;
+    Changes(Date day, String comment){
+        this.day = day;
         this.comment = comment;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDay() {
+        return day;
     }
 
-    public void setDate(java.util.Date date) {
-        this.date = date;
+    public void setDay(java.util.Date day) {
+        this.day = day;
     }
 
     public String getComment() {

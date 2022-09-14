@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -226,7 +227,7 @@ public class YYController  extends MoneyController{
         //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         //Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("select * from CHANGES");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         while (rs.next()) {
             java.util.Date date1;
             changesData.add(new Changes(date1 = simpleDateFormat.parse(rs.getString(3)), rs.getString(4)));
