@@ -92,10 +92,12 @@ public class YYController  extends MoneyController{
     @FXML private TableView<Goods> tableView;
     @FXML private TableColumn<Goods, Integer> idGoodsColumn;
     @FXML private TableColumn<Goods, String> nameGoodsColumn;
+    @FXML private TableColumn<Goods, Integer> amountGoodsColumn;
     //изменение количества товара
     @FXML private TableView<Goods> amountView;
     @FXML private TableColumn<Goods, Integer> idAmountColumn;
     @FXML private TableColumn<Goods, String> nameAmountColumn;
+    @FXML private TableColumn<Goods, Integer> amountAmountColumn;
     //удаление товара из бд
     @FXML private TableView<Goods> deleteView;
     @FXML private TableColumn<Goods, Integer> idDeleteColumn;
@@ -125,6 +127,7 @@ public class YYController  extends MoneyController{
         try {
             idGoodsColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id_goods"));
             nameGoodsColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
+            amountGoodsColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("amount"));
             tableView.setItems(saleData);
         }catch(NullPointerException e){
             //e.printStackTrace();
@@ -133,6 +136,7 @@ public class YYController  extends MoneyController{
         try {
             idAmountColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id_goods"));
             nameAmountColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
+            amountAmountColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("amount"));
             amountView.setItems(amountData);
         }catch(NullPointerException e){
             //e.printStackTrace();
@@ -163,7 +167,7 @@ public class YYController  extends MoneyController{
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("select * from GOODS");
         while (rs.next()) {
-            saleData.add(new Goods(rs.getInt(1), rs.getString(2)));
+            saleData.add(new Goods(rs.getInt(1), rs.getString(2), rs.getInt(3)));
         }
     }
     @FXML
@@ -173,7 +177,7 @@ public class YYController  extends MoneyController{
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("select * from GOODS");
         while (rs.next()) {
-            amountData.add(new Goods(rs.getInt(1), rs.getString(2)));
+            amountData.add(new Goods(rs.getInt(1), rs.getString(2), rs.getInt(3)));
         }
     }
     @FXML

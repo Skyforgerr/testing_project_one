@@ -42,6 +42,11 @@ public class Goods {
         this.cost_out = cost_out;
         this.profit = profit;
     }
+    public Goods(int id_goods, String name, int amount){
+        this.id_goods = id_goods;
+        this.name = name;
+        this.amount = amount;
+    }
 
     public int getId_goods() {
         return id_goods;
