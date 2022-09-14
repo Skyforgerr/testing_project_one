@@ -7,18 +7,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane
+<AnchorPane fx:controller="com.example.testing_project_one.MoneyController"
             maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
             prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
             stylesheets="bootstrapfx.css" style="-fx-background-image: url(down.png); -fx-background-size: cover"
             AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
             AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">
-   <TextField layoutX="21.0" layoutY="45.0" prefHeight="26.0" prefWidth="242.0"
+   <TextField layoutX="21.0" layoutY="45.0" prefHeight="26.0" prefWidth="242.0" fx:id="money_down"
               style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa"/>
    <Button layoutX="460.0" layoutY="360.0" mnemonicParsing="false" text="Изъять из бюджета" styleClass="btn"
-   AnchorPane.bottomAnchor="10" AnchorPane.rightAnchor="10"/>
+   AnchorPane.bottomAnchor="10" AnchorPane.rightAnchor="10" onAction="#new_down" fx:id="down"/>
    <TextArea layoutX="21.0" layoutY="100.0" prefHeight="200.0" prefWidth="558.0"
-             style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa" AnchorPane.rightAnchor="20" AnchorPane.leftAnchor="20"/>
+             style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa"
+             AnchorPane.rightAnchor="20" AnchorPane.leftAnchor="20" fx:id="comment_down"/>
    <Label layoutX="21.0" layoutY="20.0" text="Сколько ушло из бюджета" styleClass="lbl,lbl-warning"
           style="-fx-font-size: 15px"/>
    <Label layoutX="21.0" layoutY="75.0" text="Комментарий к изменению" styleClass="lbl,lbl-warning"
