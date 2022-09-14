@@ -97,7 +97,7 @@ public class YYController {
         } catch (Exception e) {
             throw new RuntimeException("unhandled", e);
         }
-        Goods goods = null;
+        Goods goods;
         try {
             goods = new Goods(name.getText(), Integer.parseInt(amount.getText()), Integer.parseInt(cost_out.getText()),
                     Integer.parseInt(cost_in.getText()),
@@ -169,7 +169,7 @@ public class YYController {
 
             tableGoods.setItems(goodsData);
         }catch(NullPointerException e){
-
+            e.printStackTrace();
         }
     }
     @FXML
