@@ -26,29 +26,12 @@ import java.util.Objects;
  */
 public class YYController {
     Stage stage_change = new Stage();
-    @FXML
-    Button good;
-    @FXML
-    Button sale;
-    @FXML
-    Button up;
-    @FXML
-    Button down;
-    @FXML
-    Button del;
-    @FXML
-    Button new_good;
-    @FXML
-    TextField name;
-    @FXML
-    TextField amount;
-    @FXML
-    TextField cost_out;
-    @FXML
-    TextField cost_in;
+    @FXML Button good;
+    @FXML Button sale;
+    @FXML Button up;
+    @FXML Button down;
+    @FXML Button del;
     Connection connection;
-
-
 
     //Запуск бд
     public void startDataBase() {
@@ -85,42 +68,7 @@ public class YYController {
         statement.executeUpdate(sql2);
         System.out.println("Created all the tables...");
     }
-    public void insertGoods() throws SQLException {
-        // Закрытие окна
-        Stage stage_del = (Stage) new_good.getScene().getWindow();
-        stage_del.close();
 
-        connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
-        Statement statement;
-        try {
-            statement = connection.createStatement();
-        } catch (Exception e) {
-            throw new RuntimeException("unhandled", e);
-        }
-        Goods goods;
-        try {
-            goods = new Goods(name.getText(), Integer.parseInt(amount.getText()), Integer.parseInt(cost_out.getText()),
-                    Integer.parseInt(cost_in.getText()),
-                    Integer.parseInt("-" + cost_in.getText()));
-            System.out.println("Adding goods to the table");
-            String addingGoods = "INSERT INTO GOODS (name, amount, cost_out, cost_in, profit)" +
-                    "VALUES ('" + goods.getName() + "', '" + goods.getAmount() + "', '" + goods.getCost_out() +
-                    "', '" + goods.getCost_in() + "', '" + goods.getProfit() + "');";
-            statement.executeUpdate(addingGoods);
-        } catch (NumberFormatException e) {
-            Stage stage = new Stage();
-            stage.setMinHeight(100);
-            stage.setMinWidth(400);
-            stage.setTitle("Ошибка");
-            BorderPane borderPane = new BorderPane();
-            Text text = new Text("Некорректные данные!!!");
-            text.setStyle("--fxbackground-color: red");
-            borderPane.setCenter(text);
-            Scene scene = new Scene(borderPane);
-            stage.setScene(scene);
-            stage.show();
-        }
-    }
     public void closeDataBase(){
         try{
             connection.close();
@@ -133,28 +81,13 @@ public class YYController {
 
     // работа с выводом в верхнюю таблицу
     private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
-
-    @FXML
-    private TableView<Goods> tableGoods;
-
-    @FXML
-    private TableColumn<Goods, Integer> idColumn;
-
-    @FXML
-    private TableColumn<Goods, String> nameColumn;
-
-    @FXML
-    private TableColumn<Goods, Integer> amountColumn;
-
-    @FXML
-    private TableColumn<Goods, Integer> costOutColumn;
-
-    @FXML
-    private TableColumn<Goods, Integer> costInColumn;
-
-    @FXML
-    private TableColumn<Goods, Integer> profitColumn;
-
+    @FXML private TableView<Goods> tableGoods;
+    @FXML private TableColumn<Goods, Integer> idColumn;
+    @FXML private TableColumn<Goods, String> nameColumn;
+    @FXML private TableColumn<Goods, Integer> amountColumn;
+    @FXML private TableColumn<Goods, Integer> costOutColumn;
+    @FXML private TableColumn<Goods, Integer> costInColumn;
+    @FXML private TableColumn<Goods, Integer> profitColumn;
 
     @FXML
     private void initialize() throws SQLException {
@@ -297,6 +230,4 @@ public class YYController {
         stage_change.setTitle("Удаление товара");
         stage_change.show();
     }
-
-
 }

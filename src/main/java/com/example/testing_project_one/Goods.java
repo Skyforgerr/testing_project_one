@@ -32,7 +32,7 @@ public class Goods {
         return id_goods;
     }
 
-    public void setId(int id) {
+    public void setId_goods(int id) {
         this.id_goods = id_goods;
     }
 
