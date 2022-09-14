@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane fx:controller="com.example.testing_project_one.YYController"
+<AnchorPane
             maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
             prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
             stylesheets="bootstrapfx.css" style="-fx-background-image: url(down.png); -fx-background-size: cover"
