@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,6 +21,7 @@ import java.util.Objects;
  * @author Pavel
  */
 public class YYController  {
+    @FXML Label allTheMoney;
     Stage stage_change = new Stage();
     Connection connection;
 
@@ -123,9 +125,14 @@ public class YYController  {
     // Добавляет данные в таблицу
     @FXML
     private void new_data() throws SQLException{
+
         goodsData.clear();
         connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
+        allTheMoney.setText("Бюджет: "
+                +  statement.executeQuery("SELECT all_the_money FROM MONEY").getInt(1)
+                + " Прибыль: "
+                + statement.executeQuery("SELECT all_the_lost FROM MONEY").getInt(1));
         ResultSet rs = statement.executeQuery("select * from GOODS");
         int n = 1;
         while (rs.next()) {
@@ -179,6 +186,4 @@ public class YYController  {
         stage_change.setTitle("Выбор изменения");
         stage_change.show();
     }
-
-
 }

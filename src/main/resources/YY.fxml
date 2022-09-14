@@ -17,7 +17,7 @@
                 AnchorPane.topAnchor="30">
         <center>
             <Label style="-fx-font-size: 12px" styleClass="lbl,lbl-warning" text="Бюджет: "
-                   BorderPane.alignment="CENTER" />
+                   BorderPane.alignment="CENTER" fx:id="allTheMoney"/>
         </center>
     </BorderPane>
     <GridPane prefHeight="329.0" prefWidth="600.0" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="0"
