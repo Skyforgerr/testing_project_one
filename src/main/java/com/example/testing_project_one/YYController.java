@@ -1,7 +1,5 @@
 package com.example.testing_project_one;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,13 +7,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.sql.*;
@@ -47,27 +47,6 @@ public class YYController {
     @FXML
     TextField cost_in;
     Connection connection;
-    //for table with goods
-    @FXML
-    private TableView<Goods> tableGoods;
-
-    @FXML
-    private TableColumn<Goods, Integer> idColumn;
-
-    @FXML
-    private TableColumn<Goods, String> nameColumn;
-
-    @FXML
-    private TableColumn<Goods, Integer> amountColumn;
-
-    @FXML
-    private TableColumn<Goods, Integer> costOutColumn;
-
-    @FXML
-    private TableColumn<Goods, Integer> costInColumn;
-
-    @FXML
-    private TableColumn<Goods, Integer> profitColumn;
 
 
 
@@ -78,52 +57,10 @@ public class YYController {
             connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
             System.out.println("Connection established...");
             createDataBase();
-            Statement statement = connection.createStatement();
-            String exists = "SELECT * FROM GOODS WHERE EXISTS(SELECT id_goods from GOODS WHERE id_goods = 1)";
-            boolean result;
-            ResultSet rs = statement.executeQuery(exists);
-            result = rs.getBoolean(1);
-            if (result) onStartup();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }
-    private ObservableList<Goods> data;
-
-    @FXML
-    public void onStartup() throws SQLException{
-        data = FXCollections.observableArrayList();
-        try{
-            connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
-            String sql = "SELECT * from GOODS";
-            ResultSet rs = connection.createStatement().executeQuery(sql);
-//            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++){
-//                final int j = i;
-//                TableColumn column = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-//                column.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Goods, String>, ObservableValue<Goods>>() {
-//                    public ObservableValue<Goods> call(TableColumn.CellDataFeatures<Goods, String> param) {
-//                        return new SimpleStringProperty(param.getValue().getName());
-//                    }
-//                });
-//                tableGoods.getColumns().addAll(column);
-//            }
-            while(rs.next()){
-                ObservableList<Goods> row = FXCollections.observableArrayList();
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++){
-                    Statement statement = connection.createStatement();
-                    ResultSet rs_1 = statement.executeQuery("SELECT * FROM GOODS");
-                    row.add(new Goods(rs_1.getString(2), rs_1.getInt(3), rs_1.getInt(4),rs_1.getInt(5),rs_1.getInt(6)));
-                }
-
-                data.addAll(row);
-            }
-            tableGoods.setItems(data);
-
-        }catch(Exception e){
-            e.printStackTrace();
-            System.out.println("Error on building data...");
-        }
     }
 
     public void createDataBase() throws SQLException {
@@ -196,6 +133,27 @@ public class YYController {
 
     // работа с выводом в верхнюю таблицу
     private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
+
+    @FXML
+    private TableView<Goods> tableGoods;
+
+    @FXML
+    private TableColumn<Goods, Integer> idColumn;
+
+    @FXML
+    private TableColumn<Goods, String> nameColumn;
+
+    @FXML
+    private TableColumn<Goods, Integer> amountColumn;
+
+    @FXML
+    private TableColumn<Goods, Integer> costOutColumn;
+
+    @FXML
+    private TableColumn<Goods, Integer> costInColumn;
+
+    @FXML
+    private TableColumn<Goods, Integer> profitColumn;
 
 
     @FXML
