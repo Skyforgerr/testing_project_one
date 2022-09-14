@@ -7,7 +7,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(sale.jpg); -fx-background-size: cover" stylesheets="bootstrapfx.css" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.testing_project_one.YYController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" style="-fx-background-image: url(sale.jpg); -fx-background-size: cover"
+            stylesheets="bootstrapfx.css" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+            AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" xmlns="http://javafx.com/javafx/16"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.testing_project_one.YYController">
     <TableView layoutX="15.0" layoutY="30.0" prefHeight="200.0" prefWidth="300.0" AnchorPane.bottomAnchor="70" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="300" AnchorPane.topAnchor="30">
       <columns>
           <TableColumn maxWidth="100" style="-fx-font-size: 10px" styleClass="lbl, lbl-warning" text="ID Товара" />
