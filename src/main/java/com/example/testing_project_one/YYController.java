@@ -211,7 +211,7 @@ public class YYController  extends ConnectionClass{
                     + "')";
             statement1.executeUpdate(new_change);
         }else if ((Integer.parseInt(amountAmount.getText()) + rs.getInt(1)) == 0){
-            amountData.clear();
+            //amountData.clear();
             String theSql = "DELETE FROM GOODS WHERE id_goods = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(theSql);
             preparedStatement.setInt(1, neededId);
@@ -223,7 +223,7 @@ public class YYController  extends ConnectionClass{
             Date date = new Date(System.currentTimeMillis());
             System.out.println(date);
             String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
-                    Integer.parseInt(deleteField.getText()) + "', '" + date + "', '" +
+                    neededId + "', '" + date + "', '" +
                     "Товар под номером " +  neededId + " был удален, так как его количество стало равно 0"
                     +  "')";
             statement.executeUpdate(new_change);
@@ -251,40 +251,71 @@ public class YYController  extends ConnectionClass{
         int newAmount = 0;
         int neededId = 0;
         int oldAmount = rs.getInt(3);
-        newAmount = rs.getInt(3) - Integer.parseInt(saleAmountGoods.getText());
-        neededId = Integer.parseInt(saleIdGoods.getText());
-        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GOODS SET amount = ? WHERE id_goods = ?");
-        preparedStatement.setInt(1, newAmount);
-        preparedStatement.setInt(2, neededId);
-        preparedStatement.executeUpdate();
-        PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM GOODS WHERE id_goods = ?");
-        preparedStatement1.setInt(1, neededId);
-        ResultSet rs_1 = statement.executeQuery("select * from GOODS");
-        while (rs.next()) {
-            saleData.add(new Goods(rs_1.getInt(1), rs_1.getString(2), rs_1.getInt(3)));
+        if (rs.getInt(3) - Integer.parseInt((saleAmountGoods.getText())) > 0) {
+            newAmount = rs.getInt(3) - Integer.parseInt(saleAmountGoods.getText());
+            neededId = Integer.parseInt(saleIdGoods.getText());
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GOODS SET amount = ? WHERE id_goods = ?");
+            preparedStatement.setInt(1, newAmount);
+            preparedStatement.setInt(2, neededId);
+            preparedStatement.executeUpdate();
+            PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM GOODS WHERE id_goods = ?");
+            preparedStatement1.setInt(1, neededId);
+            ResultSet rs_1 = statement.executeQuery("select * from GOODS");
+            while (rs.next()) {
+                saleData.add(new Goods(rs_1.getInt(1), rs_1.getString(2), rs_1.getInt(3)));
+            }
+            PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT cost_out FROM GOODS WHERE id_goods = ?");
+            preparedStatement3.setInt(1, neededId);
+            ResultSet costSet = preparedStatement3.executeQuery();
+            int theCost = costSet.getInt(1);
+            String money_change = "UPDATE MONEY SET all_the_money = ?, all_the_lost = ?";
+            ResultSet rs3 = statement.executeQuery("SELECT * FROM MONEY");
+            ResultSet rs4 = statement.executeQuery("SELECT * FROM GOODS");
+            int amountBought = Integer.parseInt(saleAmountGoods.getText());
+            int currentMoney = rs3.getInt(1);
+            int currentLost = rs3.getInt(2);
+            PreparedStatement preparedStatement2 = connection.prepareStatement(money_change);
+            preparedStatement2.setInt(1, (currentMoney + amountBought * theCost));
+            preparedStatement2.setInt(2, ((currentLost + amountBought * theCost)));
+            preparedStatement2.executeUpdate();
+            Date date = new Date(System.currentTimeMillis());
+            System.out.println(date);
+            String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('" +
+                    neededId + "', '" + date + "', '" +
+                    "Товар " + preparedStatement1.executeQuery().getString(1) + " продан в количестве " + (oldAmount - newAmount) +
+                    ". Бюджет увеличен на " + (currentMoney + amountBought * theCost)
+                    + "')";
+            statement.executeUpdate(new_change);
+        }else if ((Integer.parseInt(saleAmountGoods.getText())) - rs.getInt(3) == 0){
+            //saleData.clear();
+            String theSql = "DELETE FROM GOODS WHERE id_goods = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(theSql);
+            preparedStatement.setInt(1, neededId);
+            preparedStatement.executeUpdate();
+            ResultSet rs_1 = statement.executeQuery("select * from GOODS");
+            while (rs_1.next()) {
+                amountData.add(new Goods(rs_1.getInt(1), rs_1.getString(2)));
+            }
+            Date date = new Date(System.currentTimeMillis());
+            System.out.println(date);
+            String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
+                    neededId + "', '" + date + "', '" +
+                    "Товар под номером " +  neededId + " был удален, так как он бы распродан"
+                    +  "')";
+            statement.executeUpdate(new_change);
+        }else{
+            Stage stage = new Stage();
+            stage.setMinHeight(100);
+            stage.setMinWidth(400);
+            stage.setTitle("Ошибка");
+            BorderPane borderPane = new BorderPane();
+            Text text = new Text("Некорректные данные!!!");
+            text.setStyle("--fxbackground-color: red");
+            borderPane.setCenter(text);
+            Scene scene = new Scene(borderPane);
+            stage.setScene(scene);
+            stage.show();
         }
-        PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT cost_out FROM GOODS WHERE id_goods = ?");
-        preparedStatement3.setInt(1, neededId);
-        ResultSet costSet = preparedStatement3.executeQuery();
-        int theCost = costSet.getInt(1);
-        String money_change = "UPDATE MONEY SET all_the_money = ?, all_the_lost = ?";
-        ResultSet rs3 = statement.executeQuery("SELECT * FROM MONEY");
-        ResultSet rs4 = statement.executeQuery("SELECT * FROM GOODS");
-        int amountBought = Integer.parseInt(saleAmountGoods.getText());
-        int currentMoney = rs3.getInt(1);
-        int currentLost = rs3.getInt(2);
-        PreparedStatement preparedStatement2 = connection.prepareStatement(money_change);
-        preparedStatement2.setInt(1, (currentMoney + amountBought * theCost));
-        preparedStatement2.setInt(2, ((currentLost + amountBought * theCost)));
-        preparedStatement2.executeUpdate();
-        Date date = new Date(System.currentTimeMillis());
-        System.out.println(date);
-        String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
-                neededId + "', '" + date + "', '" +
-                "Товар " + preparedStatement1.executeQuery().getString(1) + " продан в количестве " + (oldAmount - newAmount) +
-                ". Бюджет увеличен на " + (currentMoney + amountBought * theCost)
-                +  "')";
-        statement.executeUpdate(new_change);
     }
 
     @FXML
