@@ -10,6 +10,8 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javax.xml.transform.Result;
@@ -176,38 +178,70 @@ public class YYController  extends ConnectionClass{
         }
     }
     @FXML
-    private void changeAmount() throws SQLException{
+    private void changeAmount() throws SQLException {
         amountData.clear();
 
         int neededId = Integer.parseInt(idAmount.getText());
         PreparedStatement statement = connection.prepareStatement("SELECT amount FROM GOODS WHERE id_goods = ?");
         statement.setInt(1, neededId);
         ResultSet rs = statement.executeQuery();
+        if ((Integer.parseInt(amountAmount.getText()) + rs.getInt(1)) > 0){
+            int newAmount = rs.getInt(1) + Integer.parseInt(amountAmount.getText());
 
-        int newAmount = rs.getInt(1) + Integer.parseInt(amountAmount.getText());
-        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GOODS SET amount = ? WHERE id_goods = ?");
-        preparedStatement.setInt(1, newAmount);
-        preparedStatement.setInt(2, neededId);
-        preparedStatement.executeUpdate();
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GOODS SET amount = ? WHERE id_goods = ?");
+            preparedStatement.setInt(1, newAmount);
+            preparedStatement.setInt(2, neededId);
+            preparedStatement.executeUpdate();
 
-        PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM GOODS WHERE id_goods = ?");
-        preparedStatement1.setInt(1, neededId);
-        Statement statement1 = connection.createStatement();
+            PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM GOODS WHERE id_goods = ?");
+            preparedStatement1.setInt(1, neededId);
+            Statement statement1 = connection.createStatement();
 
-        ResultSet rs_1 = statement1.executeQuery("select * from GOODS");
-        while (rs.next()) {
-            amountData.add(new Goods(rs_1.getInt(1), rs_1.getString(2), rs_1.getInt(3)));
+            ResultSet rs_1 = statement1.executeQuery("select * from GOODS");
+            while (rs.next()) {
+                amountData.add(new Goods(rs_1.getInt(1), rs_1.getString(2), rs_1.getInt(3)));
+            }
+
+            Date date = new Date(System.currentTimeMillis());
+            System.out.println(date);
+
+            String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('" +
+                    neededId + "', '" + date + "', '" +
+                    "Количество товара " + preparedStatement1.executeQuery().getString(1) + " было изменено на значение " + newAmount
+                    + "')";
+            statement1.executeUpdate(new_change);
+        }else if ((Integer.parseInt(amountAmount.getText()) + rs.getInt(1)) == 0){
+            amountData.clear();
+            String theSql = "DELETE FROM GOODS WHERE id_goods = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(theSql);
+            preparedStatement.setInt(1, neededId);
+            preparedStatement.executeUpdate();
+            ResultSet rs_1 = statement.executeQuery("select * from GOODS");
+            while (rs_1.next()) {
+                amountData.add(new Goods(rs_1.getInt(1), rs_1.getString(2)));
+            }
+            Date date = new Date(System.currentTimeMillis());
+            System.out.println(date);
+            String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
+                    Integer.parseInt(deleteField.getText()) + "', '" + date + "', '" +
+                    "Товар под номером " +  neededId + " был удален, так как его количество стало равно 0"
+                    +  "')";
+            statement.executeUpdate(new_change);
+        }else {
+            Stage stage = new Stage();
+            stage.setMinHeight(100);
+            stage.setMinWidth(400);
+            stage.setTitle("Ошибка");
+            BorderPane borderPane = new BorderPane();
+            Text text = new Text("Некорректные данные!!!");
+            text.setStyle("--fxbackground-color: red");
+            borderPane.setCenter(text);
+            Scene scene = new Scene(borderPane);
+            stage.setScene(scene);
+            stage.show();
         }
-
-        Date date = new Date(System.currentTimeMillis());
-        System.out.println(date);
-
-        String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
-                neededId + "', '" + date + "', '" +
-                "Количество товара " + preparedStatement1.executeQuery().getString(1) + " было изменено на значение " + newAmount
-                +  "')";
-        statement1.executeUpdate(new_change);
     }
+
     @FXML
     private void saleTheGood() throws SQLException{
         saleData.clear();
