@@ -7,13 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
@@ -107,6 +106,10 @@ public class YYController  extends MoneyController{
     @FXML private TableColumn<Changes, Date> dateColumn;
     @FXML private TableColumn<Changes, String> changeColumn;
 
+    //текстовые поля для окна изменения количества
+    @FXML private TextField idAmount;
+    @FXML private TextField amountAmount;
+
     @FXML
     private void initialize() throws SQLException, ParseException {
         new_data();
@@ -181,6 +184,34 @@ public class YYController  extends MoneyController{
         }
     }
     @FXML
+    private void changeAmount() throws SQLException{
+        amountData.clear();
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("SELECT * FROM GOODS");
+        int newAmount = 0;
+        int neededId = 0;
+        newAmount = rs.getInt(3) + Integer.parseInt(amountAmount.getText());
+        neededId = Integer.parseInt(idAmount.getText());
+        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GOODS SET amount = ? WHERE id_goods = ?");
+        preparedStatement.setInt(1, newAmount);
+        preparedStatement.setInt(2, neededId);
+        preparedStatement.executeUpdate();
+        PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM GOODS WHERE id_goods = ?");
+        preparedStatement1.setInt(1, neededId);
+        ResultSet rs_1 = statement.executeQuery("select * from GOODS");
+        while (rs.next()) {
+            amountData.add(new Goods(rs_1.getInt(1), rs_1.getString(2), rs_1.getInt(3)));
+        }
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println(date);
+        String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
+                neededId + "', '" + date + "', '" +
+                "Количество товара " + preparedStatement1.executeQuery().getString(1) + " было изменено на значение " + newAmount
+                +  "')";
+        statement.executeUpdate(new_change);
+    }
+    @FXML
     private void new_dataDelete() throws SQLException{
         deleteData.clear();
         Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
@@ -191,18 +222,6 @@ public class YYController  extends MoneyController{
         }
     }
 
-//    @FXML
-//    private void new_dataChange() throws SQLException, ParseException {
-//        changesData.clear();
-//        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
-//        Statement statement = connection.createStatement();
-//        ResultSet rs = statement.executeQuery("select * from CHANGES");
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        while (rs.next()) {
-//            java.util.Date date1;
-//                changesData.add(new Changes(date1 = simpleDateFormat.parse(rs.getString(3)), rs.getString(4)));
-//        }
-//    }
     // Добавляет данные в таблицу
     @FXML
     private void new_data() throws SQLException, ParseException {

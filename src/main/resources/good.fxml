@@ -19,11 +19,11 @@
           <TableColumn fx:id="amountAmountColumn" minWidth="35" style="-fx-font-size: 10px"  text="Кол-во" />
       </columns>
     </TableView>
-    <Button layoutX="523.0" layoutY="360.0" mnemonicParsing="false" styleClass="btn" text="Изменить" AnchorPane.bottomAnchor="10" AnchorPane.rightAnchor="10" />
-    <TextField layoutX="347.0" layoutY="71.0" style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa" AnchorPane.rightAnchor="100" />
+    <Button onAction="#changeAmount" layoutX="523.0" layoutY="360.0" mnemonicParsing="false" styleClass="btn" text="Изменить" AnchorPane.bottomAnchor="10" AnchorPane.rightAnchor="10" />
+    <TextField fx:id="idAmount" layoutX="347.0" layoutY="71.0" style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa" AnchorPane.rightAnchor="100" />
     <Label layoutX="347.0" layoutY="46.0" style="-fx-font-size: 15px" styleClass="lbl, lbl-warning" text="ID Товара" AnchorPane.rightAnchor="100" />
     <Label layoutX="347.0" layoutY="121.0" style="-fx-font-size: 15px" styleClass="lbl, lbl-warning" text="Количество" AnchorPane.rightAnchor="100" />
-    <TextField layoutX="348.0" layoutY="146.0" style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa" AnchorPane.rightAnchor="100" />
+    <TextField fx:id="amountAmount" layoutX="348.0" layoutY="146.0" style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa" AnchorPane.rightAnchor="100" />
    <Label text="Чтобы уменьшить количество товара укажите число с &quot;-&quot;" AnchorPane.leftAnchor="10"
           AnchorPane.bottomAnchor="10" style="-fx-font-size: 15px" styleClass="lbl, lbl-warning"/>
 </AnchorPane>
