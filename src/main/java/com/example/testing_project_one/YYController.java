@@ -109,6 +109,8 @@ public class YYController  extends MoneyController{
     //текстовые поля для окна изменения количества
     @FXML private TextField idAmount;
     @FXML private TextField amountAmount;
+    //текстовые поля для окна удаления товара
+    @FXML private TextField deleteField;
 
     @FXML
     private void initialize() throws SQLException, ParseException {
@@ -175,7 +177,7 @@ public class YYController  extends MoneyController{
     }
     @FXML
     private void new_dataAmount() throws SQLException{
-        deleteData.clear();
+        amountData.clear();
         Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("select * from GOODS");
@@ -220,6 +222,28 @@ public class YYController  extends MoneyController{
         while (rs.next()) {
             deleteData.add(new Goods(rs.getInt(1), rs.getString(2)));
         }
+    }
+    @FXML
+    private void deleteTheField() throws SQLException{
+        deleteData.clear();
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        Statement statement = connection.createStatement();
+        String theSql = "DELETE FROM GOODS WHERE id_goods = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(theSql);
+        int theField = Integer.parseInt(deleteField.getText());
+        preparedStatement.setInt(1, Integer.parseInt(deleteField.getText()));
+        preparedStatement.executeUpdate();
+        ResultSet rs_1 = statement.executeQuery("select * from GOODS");
+        while (rs_1.next()) {
+            amountData.add(new Goods(rs_1.getInt(1), rs_1.getString(2)));
+        }
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println(date);
+        String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
+                Integer.parseInt(deleteField.getText()) + "', '" + date + "', '" +
+                "Товар под номером " +  theField + " был удален"
+                +  "')";
+        statement.executeUpdate(new_change);
     }
 
     // Добавляет данные в таблицу

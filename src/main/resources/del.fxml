@@ -21,9 +21,9 @@
           <TableColumn fx:id="nameDeleteColumn" minWidth="225" text="Название товара" style="-fx-font-size: 10px" />
       </columns>
     </TableView>
-    <Button layoutX="523.0" layoutY="360.0" mnemonicParsing="false" text="Удалить" styleClass="btn"
+    <Button onAction="#deleteTheField" layoutX="523.0" layoutY="360.0" mnemonicParsing="false" text="Удалить" styleClass="btn"
             AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10"/>
-    <TextField layoutX="347.0" layoutY="85.0" AnchorPane.rightAnchor="80"
+    <TextField fx:id="deleteField" layoutX="347.0" layoutY="85.0" AnchorPane.rightAnchor="80"
                style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa" />
     <Label layoutX="347.0" layoutY="60.0" text="ID Товара" styleClass="lbl, lbl-warning" style="-fx-font-size: 15px"
            AnchorPane.rightAnchor="100"/>
