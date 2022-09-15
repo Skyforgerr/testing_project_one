@@ -13,23 +13,19 @@ import java.sql.*;
 /**
  * @author Pavel
  */
-public class New_goodController extends ConnectionClass{
+public class New_goodController{
     @FXML Button new_good;
     @FXML TextField name;
     @FXML TextField amount;
     @FXML TextField cost_out;
     @FXML TextField cost_in;
-    Connection connection;
-
-    public New_goodController() throws SQLException {
-    }
 
     public void insertGoods() throws SQLException {
         // Закрытие окна
         Stage stage_del = (Stage) new_good.getScene().getWindow();
         stage_del.close();
 
-        //connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement;
         try {
             statement = connection.createStatement();
@@ -48,14 +44,14 @@ public class New_goodController extends ConnectionClass{
             statement.executeUpdate(addingGoods);
             Date date = new Date(System.currentTimeMillis());
             System.out.println(date);
-            String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
+            String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('" +
                     statement.executeQuery("SELECT id_goods FROM GOODS WHERE id_goods = " +
                             "(SELECT MAX(id_goods) FROM GOODS)").getInt(1) + "', '" + date + "', 'Добавлен товар " +
                     goods.getName() + " в количестве " + goods.getAmount() + " с затратами " + goods.getCost_out() + "')";
             statement.executeUpdate(new_change);
-            String out_money = "INSERT INTO money (all_the_money, all_the_lost) VALUES ('"+
+            String out_money = "INSERT INTO money (all_the_money, all_the_lost) VALUES ('" +
                     (statement.executeQuery("SELECT all_the_money FROM money").getInt(1) -
-                    goods.getCost_out()) + "', '" +
+                            goods.getCost_out()) + "', '" +
                     (statement.executeQuery("SELECT all_the_lost FROM money").getInt(1) -
                             goods.getCost_out()) + "')";
             statement.executeUpdate("DELETE FROM money");
@@ -73,5 +69,6 @@ public class New_goodController extends ConnectionClass{
             stage.setScene(scene);
             stage.show();
         }
+        connection.close();
     }
 }
