@@ -228,6 +228,7 @@ public class YYController  extends ConnectionClass{
         ResultSet rs = statement.executeQuery("SELECT * FROM GOODS");
         int newAmount = 0;
         int neededId = 0;
+        int oldAmount = rs.getInt(3);
         newAmount = rs.getInt(3) - Integer.parseInt(saleAmountGoods.getText());
         neededId = Integer.parseInt(saleIdGoods.getText());
         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GOODS SET amount = ? WHERE id_goods = ?");
@@ -240,20 +241,11 @@ public class YYController  extends ConnectionClass{
         while (rs.next()) {
             saleData.add(new Goods(rs_1.getInt(1), rs_1.getString(2), rs_1.getInt(3)));
         }
-        Date date = new Date(System.currentTimeMillis());
-        System.out.println(date);
-        String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
-                neededId + "', '" + date + "', '" +
-                "Количество товара " + preparedStatement1.executeQuery().getString(1) + " продано до: " + newAmount
-                +  "')";
-        statement.executeUpdate(new_change);
 
         PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT cost_out FROM GOODS WHERE id_goods = ?");
         preparedStatement3.setInt(1, neededId);
         ResultSet costSet = preparedStatement3.executeQuery();
         int theCost = costSet.getInt(1);
-
-
         String money_change = "UPDATE MONEY SET all_the_money = ?, all_the_lost = ?";
         ResultSet rs3 = statement.executeQuery("SELECT * FROM MONEY");
         ResultSet rs4 = statement.executeQuery("SELECT * FROM GOODS");
@@ -264,14 +256,14 @@ public class YYController  extends ConnectionClass{
         preparedStatement2.setInt(1, (currentMoney + amountBought * theCost));
         preparedStatement2.setInt(2, ((currentLost + amountBought * theCost)));
         preparedStatement2.executeUpdate();
-
-        Date date1 = new Date(System.currentTimeMillis());
+        Date date = new Date(System.currentTimeMillis());
         System.out.println(date);
-        String new_change1 = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
-                neededId + "', '" + date1 + "', '" +
-                "Бюджет увеличен на " + (currentMoney + amountBought * theCost) + " от продажи " + neededId
+        String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
+                neededId + "', '" + date + "', '" +
+                "Товар " + preparedStatement1.executeQuery().getString(1) + " продан в количестве " + (oldAmount - newAmount) +
+                ". Бюджет увеличен на " + (currentMoney + amountBought * theCost)
                 +  "')";
-        statement.executeUpdate(new_change1);
+        statement.executeUpdate(new_change);
     }
     @FXML
     private void new_dataDelete() throws SQLException{

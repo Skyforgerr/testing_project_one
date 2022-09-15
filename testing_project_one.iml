@@ -31,7 +31,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../../sqlite-jdbc-3.39.3.0.jar!/" />
+          <root url="jar://$USER_HOME$/sqlite-jdbc-3.39.3.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
