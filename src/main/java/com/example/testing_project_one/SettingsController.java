@@ -12,17 +12,20 @@ import java.sql.Statement;
 /**
  * @author Pavel
  */
-public class SettingsController {
-    Connection connection;
+public class SettingsController extends ConnectionClass{
     @FXML Button del_all_good;
     @FXML Button del_all_changes;
     @FXML Button del_all;
+
+    public SettingsController() throws SQLException {
+    }
+
     public void del_goods() throws SQLException {
         // Закрытие окна
         Stage stage = (Stage) del_all_good.getScene().getWindow();
         stage.close();
 
-        connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("delete from goods");
@@ -35,7 +38,7 @@ public class SettingsController {
         Stage stage = (Stage) del_all_changes.getScene().getWindow();
         stage.close();
 
-        connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("delete from changes");
@@ -47,7 +50,7 @@ public class SettingsController {
         Stage stage = (Stage) del_all.getScene().getWindow();
         stage.close();
 
-        connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("delete from changes");

@@ -15,11 +15,15 @@ import java.util.ResourceBundle;
 /**
  * @author Ivan 14.09.2022
  */
-public class SaleController implements Initializable {
+public class SaleController extends ConnectionClass{
     private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
     @FXML private TableView<Goods> tableView;
     @FXML private TableColumn<Goods, Integer> idGoodsColumn;
     @FXML private TableColumn<Goods, String> nameGoodsColumn;
+
+    public SaleController() throws SQLException {
+    }
+
     @FXML
     private void initialize() throws SQLException {
         new_dataSmall();
@@ -33,16 +37,11 @@ public class SaleController implements Initializable {
     }
     @FXML
     private void new_dataSmall() throws SQLException{
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("select * from GOODS");
         while (rs.next()) {
             goodsData.add(new Goods(rs.getInt(1), rs.getString(2)));
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 }

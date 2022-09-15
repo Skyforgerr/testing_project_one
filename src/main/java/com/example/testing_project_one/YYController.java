@@ -22,10 +22,13 @@ import java.util.Objects;
 /**
  * @author Pavel
  */
-public class YYController  extends MoneyController{
+public class YYController  extends ConnectionClass{
     @FXML Label allTheMoney;
     Stage stage_change = new Stage();
-    Connection connection;
+    //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+
+    public YYController() throws SQLException {
+    }
 
     //Запуск бд
     public void startDataBase() {
@@ -111,6 +114,9 @@ public class YYController  extends MoneyController{
     @FXML private TextField amountAmount;
     //текстовые поля для окна удаления товара
     @FXML private TextField deleteField;
+    //текстовые поля для продажи товара
+    @FXML private TextField saleIdGoods;
+    @FXML private TextField saleAmountGoods;
 
     @FXML
     private void initialize() throws SQLException, ParseException {
@@ -168,7 +174,7 @@ public class YYController  extends MoneyController{
     @FXML
     private void new_dataSmall() throws SQLException{
         saleData.clear();
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("select * from GOODS");
         while (rs.next()) {
@@ -178,7 +184,7 @@ public class YYController  extends MoneyController{
     @FXML
     private void new_dataAmount() throws SQLException{
         amountData.clear();
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("select * from GOODS");
         while (rs.next()) {
@@ -188,20 +194,21 @@ public class YYController  extends MoneyController{
     @FXML
     private void changeAmount() throws SQLException{
         amountData.clear();
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
-        Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery("SELECT * FROM GOODS");
-        int newAmount = 0;
-        int neededId = 0;
-        newAmount = rs.getInt(3) + Integer.parseInt(amountAmount.getText());
-        neededId = Integer.parseInt(idAmount.getText());
+        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        int neededId = Integer.parseInt(idAmount.getText());
+        PreparedStatement statement = connection.prepareStatement("SELECT amount FROM GOODS WHERE id_goods = ?");
+        statement.setInt(1, neededId);
+        ResultSet rs = statement.executeQuery();
+        int newAmount = rs.getInt(1) + Integer.parseInt(amountAmount.getText());
+
         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GOODS SET amount = ? WHERE id_goods = ?");
         preparedStatement.setInt(1, newAmount);
         preparedStatement.setInt(2, neededId);
         preparedStatement.executeUpdate();
         PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM GOODS WHERE id_goods = ?");
         preparedStatement1.setInt(1, neededId);
-        ResultSet rs_1 = statement.executeQuery("select * from GOODS");
+        Statement statement1 = connection.createStatement();
+        ResultSet rs_1 = statement1.executeQuery("select * from GOODS");
         while (rs.next()) {
             amountData.add(new Goods(rs_1.getInt(1), rs_1.getString(2), rs_1.getInt(3)));
         }
@@ -211,12 +218,65 @@ public class YYController  extends MoneyController{
                 neededId + "', '" + date + "', '" +
                 "Количество товара " + preparedStatement1.executeQuery().getString(1) + " было изменено на значение " + newAmount
                 +  "')";
+        statement1.executeUpdate(new_change);
+    }
+    @FXML
+    private void saleTheGood() throws SQLException{
+        saleData.clear();
+        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery("SELECT * FROM GOODS");
+        int newAmount = 0;
+        int neededId = 0;
+        newAmount = rs.getInt(3) - Integer.parseInt(saleAmountGoods.getText());
+        neededId = Integer.parseInt(saleIdGoods.getText());
+        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GOODS SET amount = ? WHERE id_goods = ?");
+        preparedStatement.setInt(1, newAmount);
+        preparedStatement.setInt(2, neededId);
+        preparedStatement.executeUpdate();
+        PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM GOODS WHERE id_goods = ?");
+        preparedStatement1.setInt(1, neededId);
+        ResultSet rs_1 = statement.executeQuery("select * from GOODS");
+        while (rs.next()) {
+            saleData.add(new Goods(rs_1.getInt(1), rs_1.getString(2), rs_1.getInt(3)));
+        }
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println(date);
+        String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
+                neededId + "', '" + date + "', '" +
+                "Количество товара " + preparedStatement1.executeQuery().getString(1) + " продано до: " + newAmount
+                +  "')";
         statement.executeUpdate(new_change);
+
+        PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT cost_out FROM GOODS WHERE id_goods = ?");
+        preparedStatement3.setInt(1, neededId);
+        ResultSet costSet = preparedStatement3.executeQuery();
+        int theCost = costSet.getInt(1);
+
+
+        String money_change = "UPDATE MONEY SET all_the_money = ?, all_the_lost = ?";
+        ResultSet rs3 = statement.executeQuery("SELECT * FROM MONEY");
+        ResultSet rs4 = statement.executeQuery("SELECT * FROM GOODS");
+        int amountBought = Integer.parseInt(saleAmountGoods.getText());
+        int currentMoney = rs3.getInt(1);
+        int currentLost = rs3.getInt(2);
+        PreparedStatement preparedStatement2 = connection.prepareStatement(money_change);
+        preparedStatement2.setInt(1, (currentMoney + amountBought * theCost));
+        preparedStatement2.setInt(2, ((currentLost + amountBought * theCost)));
+        preparedStatement2.executeUpdate();
+
+        Date date1 = new Date(System.currentTimeMillis());
+        System.out.println(date);
+        String new_change1 = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
+                neededId + "', '" + date1 + "', '" +
+                "Бюджет увеличен на " + (currentMoney + amountBought * theCost) + " от продажи " + neededId
+                +  "')";
+        statement.executeUpdate(new_change1);
     }
     @FXML
     private void new_dataDelete() throws SQLException{
         deleteData.clear();
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("select * from GOODS");
         while (rs.next()) {
@@ -226,7 +286,7 @@ public class YYController  extends MoneyController{
     @FXML
     private void deleteTheField() throws SQLException{
         deleteData.clear();
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         String theSql = "DELETE FROM GOODS WHERE id_goods = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(theSql);
@@ -251,7 +311,7 @@ public class YYController  extends MoneyController{
     private void new_data() throws SQLException, ParseException {
 
         goodsData.clear();
-        connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         try {
             allTheMoney.setText("Бюджет: "

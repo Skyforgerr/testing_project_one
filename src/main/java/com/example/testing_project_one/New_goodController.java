@@ -13,19 +13,23 @@ import java.sql.*;
 /**
  * @author Pavel
  */
-public class New_goodController {
+public class New_goodController extends ConnectionClass{
     @FXML Button new_good;
     @FXML TextField name;
     @FXML TextField amount;
     @FXML TextField cost_out;
     @FXML TextField cost_in;
     Connection connection;
+
+    public New_goodController() throws SQLException {
+    }
+
     public void insertGoods() throws SQLException {
         // Закрытие окна
         Stage stage_del = (Stage) new_good.getScene().getWindow();
         stage_del.close();
 
-        connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement;
         try {
             statement = connection.createStatement();

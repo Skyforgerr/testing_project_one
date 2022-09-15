@@ -14,7 +14,7 @@ import java.sql.*;
 /**
  * @author Pavel
  */
-public class MoneyController {
+public class MoneyController extends ConnectionClass{
     Connection connection;
     @FXML TextField money_up;
     @FXML TextArea comment_up;
@@ -23,12 +23,16 @@ public class MoneyController {
     @FXML Button up;
     @FXML Button down;
 
+    public MoneyController() throws SQLException {
+    }
+
+
     public void new_up() throws SQLException {
         // Закрытие окна
         Stage stage_del = (Stage) up.getScene().getWindow();
         stage_del.close();
 
-        connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         try {
             String sql_up_money = "INSERT INTO money (all_the_money) VALUES ('" +
@@ -59,7 +63,7 @@ public class MoneyController {
         Stage stage_del = (Stage) down.getScene().getWindow();
         stage_del.close();
 
-        connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         try {
             String sql_up_money = "INSERT INTO money (all_the_money) VALUES ('" +

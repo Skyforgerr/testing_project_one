@@ -15,13 +15,16 @@ import java.util.Objects;
 /**
  * @author Pavel
  */
-public class New_changeController{
+public class New_changeController extends ConnectionClass{
     @FXML Button good;
     @FXML Button sale;
     @FXML Button up;
     @FXML Button down;
     @FXML Button del;
     Stage stage_change = new Stage();
+
+    public New_changeController() throws SQLException {
+    }
 
     public void good_window() throws IOException{
         // Закрытие предыдущего окна

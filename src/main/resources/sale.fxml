@@ -22,14 +22,14 @@
           <TableColumn fx:id="amountGoodsColumn" minWidth="35" text="Кол-во" style="-fx-font-size: 10px"/>
       </columns>
     </TableView>
-    <Button layoutX="523.0" layoutY="360.0" mnemonicParsing="false" text="Продать" styleClass="btn"
+    <Button onAction="#saleTheGood" layoutX="523.0" layoutY="360.0" mnemonicParsing="false" text="Продать" styleClass="btn"
             AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10"/>
-    <TextField layoutX="347.0" layoutY="71.0" AnchorPane.rightAnchor="100"
+    <TextField fx:id="saleIdGoods" layoutX="347.0" layoutY="71.0" AnchorPane.rightAnchor="100"
                style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa" />
     <Label layoutX="347.0" layoutY="46.0" text="ID Товара" styleClass="lbl, lbl-warning" style="-fx-font-size: 15px"
            AnchorPane.rightAnchor="100"/>
     <Label layoutX="347.0" layoutY="121.0" text="Количество" styleClass="lbl, lbl-warning" style="-fx-font-size: 15px"
            AnchorPane.rightAnchor="100"/>
-    <TextField layoutX="348.0" layoutY="146.0" AnchorPane.rightAnchor="100"
+    <TextField fx:id="saleAmountGoods" layoutX="348.0" layoutY="146.0" AnchorPane.rightAnchor="100"
                style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa" />
 </AnchorPane>
