@@ -42,7 +42,7 @@ public class YYController  extends ConnectionClass{
         }
 
     }
-
+    //создание бд
     public void createDataBase() throws SQLException {
         Statement statement = connection.createStatement();
         String tableA = "CREATE TABLE IF NOT EXISTS GOODS" +
@@ -66,7 +66,7 @@ public class YYController  extends ConnectionClass{
         statement.executeUpdate(sql2);
         System.out.println("Created all the tables...");
     }
-
+    //метод завершения работы бд
     public void closeDataBase(){
         try{
             connection.close();
@@ -77,7 +77,7 @@ public class YYController  extends ConnectionClass{
 
     }
 
-    // работа с выводом в верхнюю таблицу
+    // все необходимые FXML поля
     private ObservableList<Goods> goodsData = FXCollections.observableArrayList();
     private ObservableList<Goods> saleData = FXCollections.observableArrayList();
     private ObservableList<Goods> amountData = FXCollections.observableArrayList();
@@ -117,7 +117,7 @@ public class YYController  extends ConnectionClass{
     //текстовые поля для продажи товара
     @FXML private TextField saleIdGoods;
     @FXML private TextField saleAmountGoods;
-
+    //методы добавления значений в поля tableview
     @FXML
     private void initialize() throws SQLException, ParseException {
         new_data();
@@ -128,53 +128,38 @@ public class YYController  extends ConnectionClass{
             costOutColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("cost_out"));
             costInColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("cost_in"));
             profitColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("profit"));
-
             tableGoods.setItems(goodsData);
-        }catch(NullPointerException e){
-            //e.printStackTrace();
-        }
-
+        }catch(NullPointerException e){}
         new_dataSmall();
         try {
             idGoodsColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id_goods"));
             nameGoodsColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
             amountGoodsColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("amount"));
             tableView.setItems(saleData);
-        }catch(NullPointerException e){
-            //e.printStackTrace();
-        }
+        }catch(NullPointerException e){}
         new_dataAmount();
         try {
             idAmountColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id_goods"));
             nameAmountColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
             amountAmountColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("amount"));
             amountView.setItems(amountData);
-        }catch(NullPointerException e){
-            //e.printStackTrace();
-        }
+        }catch(NullPointerException e){}
         new_dataDelete();
         try {
             idDeleteColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("id_goods"));
             nameDeleteColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("name"));
             deleteView.setItems(deleteData);
-        }catch(NullPointerException e){
-            //e.printStackTrace();
-        }
+        }catch(NullPointerException e){}
         new_data();
         try {
             dateColumn.setCellValueFactory(new PropertyValueFactory<Changes, Date>("day"));
             changeColumn.setCellValueFactory(new PropertyValueFactory<Changes, String>("comment"));
             changeView.setItems(changesData);
-        }catch(NullPointerException e){
-            //e.printStackTrace();
-        }
-
-
+        }catch(NullPointerException e){}
     }
     @FXML
     private void new_dataSmall() throws SQLException{
         saleData.clear();
-        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("select * from GOODS");
         while (rs.next()) {
@@ -184,7 +169,6 @@ public class YYController  extends ConnectionClass{
     @FXML
     private void new_dataAmount() throws SQLException{
         amountData.clear();
-        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("select * from GOODS");
         while (rs.next()) {
@@ -194,26 +178,30 @@ public class YYController  extends ConnectionClass{
     @FXML
     private void changeAmount() throws SQLException{
         amountData.clear();
-        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+
         int neededId = Integer.parseInt(idAmount.getText());
         PreparedStatement statement = connection.prepareStatement("SELECT amount FROM GOODS WHERE id_goods = ?");
         statement.setInt(1, neededId);
         ResultSet rs = statement.executeQuery();
-        int newAmount = rs.getInt(1) + Integer.parseInt(amountAmount.getText());
 
+        int newAmount = rs.getInt(1) + Integer.parseInt(amountAmount.getText());
         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE GOODS SET amount = ? WHERE id_goods = ?");
         preparedStatement.setInt(1, newAmount);
         preparedStatement.setInt(2, neededId);
         preparedStatement.executeUpdate();
+
         PreparedStatement preparedStatement1 = connection.prepareStatement("SELECT name FROM GOODS WHERE id_goods = ?");
         preparedStatement1.setInt(1, neededId);
         Statement statement1 = connection.createStatement();
+
         ResultSet rs_1 = statement1.executeQuery("select * from GOODS");
         while (rs.next()) {
             amountData.add(new Goods(rs_1.getInt(1), rs_1.getString(2), rs_1.getInt(3)));
         }
+
         Date date = new Date(System.currentTimeMillis());
         System.out.println(date);
+
         String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
                 neededId + "', '" + date + "', '" +
                 "Количество товара " + preparedStatement1.executeQuery().getString(1) + " было изменено на значение " + newAmount
@@ -241,7 +229,6 @@ public class YYController  extends ConnectionClass{
         while (rs.next()) {
             saleData.add(new Goods(rs_1.getInt(1), rs_1.getString(2), rs_1.getInt(3)));
         }
-
         PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT cost_out FROM GOODS WHERE id_goods = ?");
         preparedStatement3.setInt(1, neededId);
         ResultSet costSet = preparedStatement3.executeQuery();
@@ -265,20 +252,20 @@ public class YYController  extends ConnectionClass{
                 +  "')";
         statement.executeUpdate(new_change);
     }
+
     @FXML
     private void new_dataDelete() throws SQLException{
         deleteData.clear();
-        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("select * from GOODS");
         while (rs.next()) {
             deleteData.add(new Goods(rs.getInt(1), rs.getString(2)));
         }
     }
+
     @FXML
     private void deleteTheField() throws SQLException{
         deleteData.clear();
-        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         String theSql = "DELETE FROM GOODS WHERE id_goods = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(theSql);
@@ -297,13 +284,10 @@ public class YYController  extends ConnectionClass{
                 +  "')";
         statement.executeUpdate(new_change);
     }
-
     // Добавляет данные в таблицу
     @FXML
     private void new_data() throws SQLException, ParseException {
-
         goodsData.clear();
-        //connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         try {
             allTheMoney.setText("Бюджет: "
@@ -311,20 +295,14 @@ public class YYController  extends ConnectionClass{
                     + " Прибыль: "
                     + statement.executeQuery("SELECT all_the_lost FROM MONEY").getInt(1));
             ResultSet rs = statement.executeQuery("select * from GOODS");
-
             int n = 1;
             while (rs.next()) {
                 goodsData.add(new Goods(n, rs.getString(2), rs.getInt(3), rs.getInt(4),
                         rs.getInt(5), rs.getInt(6)));
                 n++;
             }
-        }catch(NullPointerException e){
-            //e.printStackTrace();
-        }
-
+        }catch(NullPointerException e){}
         changesData.clear();
-        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
-        //Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery("select * from CHANGES");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         while (rs.next()) {
@@ -332,8 +310,6 @@ public class YYController  extends ConnectionClass{
             changesData.add(new Changes(date1 = simpleDateFormat.parse(rs.getString(3)), rs.getString(4)));
         }
     }
-
-
     //окна
     public void settings() throws IOException {
         AnchorPane anchorPane = new AnchorPane();
@@ -350,7 +326,6 @@ public class YYController  extends ConnectionClass{
         stage.setScene(scene);
         stage.show();
     }
-
     public void new_good() throws Exception {
         AnchorPane anchorPane = new AnchorPane();
         Stage stage = new Stage();
@@ -364,7 +339,6 @@ public class YYController  extends ConnectionClass{
         stage.setScene(scene);
         stage.show();
     }
-
     public void new_change() throws Exception {
         stage_change.setMinHeight(400);
         stage_change.setMinWidth(620);
