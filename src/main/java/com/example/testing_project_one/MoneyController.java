@@ -14,8 +14,7 @@ import java.sql.*;
 /**
  * @author Pavel
  */
-public class MoneyController extends ConnectionClass{
-    Connection connection;
+public class MoneyController{
     @FXML TextField money_up;
     @FXML TextArea comment_up;
     @FXML TextField money_down;
@@ -23,16 +22,12 @@ public class MoneyController extends ConnectionClass{
     @FXML Button up;
     @FXML Button down;
 
-    public MoneyController() throws SQLException {
-    }
-
-
     public void new_up() throws SQLException {
         // Закрытие окна
         Stage stage_del = (Stage) up.getScene().getWindow();
         stage_del.close();
 
-        //connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         try {
             String sql_up_money = "INSERT INTO money (all_the_money) VALUES ('" +
@@ -56,6 +51,7 @@ public class MoneyController extends ConnectionClass{
             stage.setScene(scene);
             stage.show();
         }
+        connection.close();
     }
 
     public void new_down() throws SQLException {
@@ -63,7 +59,7 @@ public class MoneyController extends ConnectionClass{
         Stage stage_del = (Stage) down.getScene().getWindow();
         stage_del.close();
 
-        //connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         try {
             String sql_up_money = "INSERT INTO money (all_the_money) VALUES ('" +
@@ -74,7 +70,7 @@ public class MoneyController extends ConnectionClass{
             Date date = new Date(System.currentTimeMillis());
             statement.executeUpdate("INSERT INTO changes (day, comment) VALUES ('" + date + "', 'Ушло из бюджета "
                    + money_down.getText() + ". По причине: "+ comment_down.getText() + "')");
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             Stage stage = new Stage();
             stage.setMinHeight(100);
             stage.setMinWidth(400);
@@ -87,6 +83,7 @@ public class MoneyController extends ConnectionClass{
             stage.setScene(scene);
             stage.show();
         }
+        connection.close();
     }
 
 }
