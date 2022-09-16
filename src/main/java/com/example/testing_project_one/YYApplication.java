@@ -38,6 +38,7 @@ public class YYApplication extends Application {
             @Override
             public void handle(WindowEvent t) {
                 Platform.exit();
+                yyController.closeDataBase();
                 System.exit(0);
             }
         });

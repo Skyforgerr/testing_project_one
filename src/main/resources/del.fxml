@@ -22,7 +22,7 @@
       </columns>
     </TableView>
     <Button onAction="#deleteTheField" layoutX="523.0" layoutY="360.0" mnemonicParsing="false" text="Удалить" styleClass="btn"
-            AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10"/>
+            AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10" fx:id="delTheGood"/>
     <TextField fx:id="deleteField" layoutX="347.0" layoutY="85.0" AnchorPane.rightAnchor="80"
                style="-fx-border-color: red; -fx-border-radius: 3px; -fx-background-color: #fffafa" />
     <Label layoutX="347.0" layoutY="60.0" text="ID Товара" styleClass="lbl, lbl-warning" style="-fx-font-size: 15px"

@@ -177,6 +177,8 @@ public class YYController  extends ConnectionClass{
             amountData.add(new Goods(rs.getInt(1), rs.getString(2), rs.getInt(3)));
         }
     }
+
+    @FXML Button btnChangeAmount;
     @FXML
     private void changeAmount() throws SQLException {
         amountData.clear();
@@ -328,27 +330,54 @@ public class YYController  extends ConnectionClass{
         }
     }
 
+
+    @FXML Button delTheGood;
     @FXML
     private void deleteTheField() throws SQLException{
-        deleteData.clear();
+        // Закрытие окна
+        Stage stage_del = (Stage) delTheGood.getScene().getWindow();
+        stage_del.close();
+
         Statement statement = connection.createStatement();
-        String theSql = "DELETE FROM GOODS WHERE id_goods = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(theSql);
-        int theField = Integer.parseInt(deleteField.getText());
-        preparedStatement.setInt(1, Integer.parseInt(deleteField.getText()));
-        preparedStatement.executeUpdate();
-        ResultSet rs_1 = statement.executeQuery("select * from GOODS");
-        while (rs_1.next()) {
-            amountData.add(new Goods(rs_1.getInt(1), rs_1.getString(2)));
+
+        String SqlDelGood = "DELETE FROM GOODS WHERE id_goods = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(SqlDelGood);
+        int idGood = Integer.parseInt(deleteField.getText());
+        String nameGood = statement.executeQuery("select name from goods where id_goods = " +
+                idGood).getString(1);
+        // Если товар с таким id существует
+        if (nameGood != null) {
+            amountData.clear();
+            preparedStatement.setInt(1, Integer.parseInt(deleteField.getText()));
+            preparedStatement.executeUpdate();
+            ResultSet rs_1 = statement.executeQuery("select * from GOODS");
+            while (rs_1.next()) {
+                amountData.add(new Goods(rs_1.getInt(1), rs_1.getString(2)));
+            }
+            // Добавляется новое изменение
+            Date date = new Date(System.currentTimeMillis());
+            String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('" +
+                    Integer.parseInt(deleteField.getText()) + "', '" + date + "', '" +
+                    "Товар «" + nameGood + "» был удален"
+                    + "')";
+            statement.executeUpdate(new_change);
         }
-        Date date = new Date(System.currentTimeMillis());
-        System.out.println(date);
-        String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('"+
-                Integer.parseInt(deleteField.getText()) + "', '" + date + "', '" +
-                "Товар под номером " +  theField + " был удален"
-                +  "')";
-        statement.executeUpdate(new_change);
+        // Вывод ошибки если нет товара с таким id
+        else {
+            Stage stage = new Stage();
+            stage.setMinHeight(100);
+            stage.setMinWidth(400);
+            stage.setTitle("Ошибка");
+            BorderPane borderPane = new BorderPane();
+            Text text = new Text("Некорректные данные!!!");
+            text.setStyle("--fxbackground-color: red");
+            borderPane.setCenter(text);
+            Scene scene = new Scene(borderPane);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
+
     // Добавляет данные в таблицу
     @FXML
     private void new_data() throws SQLException, ParseException {
@@ -369,12 +398,11 @@ public class YYController  extends ConnectionClass{
         }catch(NullPointerException e){}
         changesData.clear();
         ResultSet rs = statement.executeQuery("select * from CHANGES");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         while (rs.next()) {
-            java.util.Date date1;
-            changesData.add(new Changes(date1 = simpleDateFormat.parse(rs.getString(3)), rs.getString(4)));
+            changesData.add(new Changes(rs.getString(3), rs.getString(4)));
         }
     }
+
     //окна
     public void settings() throws IOException {
         AnchorPane anchorPane = new AnchorPane();

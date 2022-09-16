@@ -46,8 +46,8 @@ public class New_goodController{
             System.out.println(date);
             String new_change = "INSERT INTO changes (id_goods, day, comment) VALUES ('" +
                     statement.executeQuery("SELECT id_goods FROM GOODS WHERE id_goods = " +
-                            "(SELECT MAX(id_goods) FROM GOODS)").getInt(1) + "', '" + date + "', 'Добавлен товар " +
-                    goods.getName() + " в количестве " + goods.getAmount() + " с затратами " + goods.getCost_out() + "')";
+                            "(SELECT MAX(id_goods) FROM GOODS)").getInt(1) + "', '" + date + "', 'Добавлен товар «" +
+                    goods.getName() + "» в количестве " + goods.getAmount() + " с затратами " + goods.getCost_out() + "')";
             statement.executeUpdate(new_change);
             String out_money = "INSERT INTO money (all_the_money, all_the_lost) VALUES ('" +
                     (statement.executeQuery("SELECT all_the_money FROM money").getInt(1) -
