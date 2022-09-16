@@ -51,13 +51,13 @@ public class SettingsController extends ConnectionClass{
         stage.close();
 
         //connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        Statement statement = connection.createStatement();
         try {
-            Statement statement = connection.createStatement();
             statement.executeUpdate("delete from changes");
             statement.executeUpdate("delete from goods");
             statement.executeUpdate("DELETE FROM money");
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 }

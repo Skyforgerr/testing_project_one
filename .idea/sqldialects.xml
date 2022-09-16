@@ -3,7 +3,6 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/testing_project_one/New_changeController.java" dialect="SQLite" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/testing_project_one/New_goodController.java" dialect="SQLite" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/example/testing_project_one/SaleController.java" dialect="SQLite" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/testing_project_one/YYController.java" dialect="GenericSQL" />
     <file url="PROJECT" dialect="SQLite" />
   </component>

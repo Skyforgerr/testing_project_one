@@ -13,19 +13,22 @@ import java.sql.*;
 /**
  * @author Pavel
  */
-public class New_goodController{
+public class New_goodController extends ConnectionClass{
     @FXML Button new_good;
     @FXML TextField name;
     @FXML TextField amount;
     @FXML TextField cost_out;
     @FXML TextField cost_in;
 
-    public void insertGoods() throws SQLException {
+    public New_goodController() throws SQLException {
+    }
+
+    public void insertGoods() throws SQLException  {
         // Закрытие окна
         Stage stage_del = (Stage) new_good.getScene().getWindow();
         stage_del.close();
 
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
+        //Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement;
         try {
             statement = connection.createStatement();
@@ -38,7 +41,7 @@ public class New_goodController{
                     Integer.parseInt(cost_in.getText()),
                     Integer.parseInt("-" + cost_in.getText()));
             System.out.println("Adding goods to the table");
-            String addingGoods = "INSERT INTO goods (name, amount, cost_out, cost_in, profit) VALUES ('" +
+            String addingGoods = "INSERT INTO goods (name, amount,  cost_in, cost_out, profit) VALUES ('" +
                     goods.getName() + "', '" + goods.getAmount() + "', '" + goods.getCost_out() +
                     "', '" + goods.getCost_in() + "', '" + goods.getProfit() + "');";
             statement.executeUpdate(addingGoods);
@@ -69,6 +72,6 @@ public class New_goodController{
             stage.setScene(scene);
             stage.show();
         }
-        connection.close();
+        //connection.close();
     }
 }
