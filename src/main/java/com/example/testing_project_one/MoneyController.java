@@ -30,10 +30,9 @@ public class MoneyController{
         Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         try {
-            String sql_up_money = "INSERT INTO money (all_the_money) VALUES ('" +
+            String sql_up_money = "UPDATE money set all_the_money = " +
                     (statement.executeQuery("SELECT all_the_money FROM money").getInt(1) +
-                            Integer.parseInt(money_up.getText())) + "')";
-            statement.executeUpdate("DELETE FROM money");
+                            Integer.parseInt(money_up.getText()));
             statement.executeUpdate(sql_up_money);
             Date date = new Date(System.currentTimeMillis());
             statement.executeUpdate("INSERT INTO changes (day, comment) VALUES ('" + date + "', 'Увеличен бюджет на "
@@ -51,7 +50,6 @@ public class MoneyController{
             stage.setScene(scene);
             stage.show();
         }
-        connection.close();
     }
 
     public void new_down() throws SQLException {
@@ -62,11 +60,10 @@ public class MoneyController{
         Connection connection = DriverManager.getConnection("jdbc:sqlite:the_yy.db");
         Statement statement = connection.createStatement();
         try {
-            String sql_up_money = "INSERT INTO money (all_the_money) VALUES ('" +
-                    (statement.executeQuery("SELECT all_the_money FROM money").getInt(1) -
-                            Integer.parseInt(money_down.getText())) + "')";
-            statement.executeUpdate("DELETE FROM money");
-            statement.executeUpdate(sql_up_money);
+            String sql_down_money = "UPDATE money set all_the_money = " +
+                    (statement.executeQuery("SELECT all_the_money FROM money").getInt(1) +
+                            Integer.parseInt(money_up.getText()));
+            statement.executeUpdate(sql_down_money);
             Date date = new Date(System.currentTimeMillis());
             statement.executeUpdate("INSERT INTO changes (day, comment) VALUES ('" + date + "', 'Ушло из бюджета "
                    + money_down.getText() + ". По причине: "+ comment_down.getText() + "')");
@@ -83,7 +80,6 @@ public class MoneyController{
             stage.setScene(scene);
             stage.show();
         }
-        connection.close();
     }
 
 }
